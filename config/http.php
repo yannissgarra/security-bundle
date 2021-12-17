@@ -18,8 +18,8 @@ return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(CookieProvider::class)
             ->args([
-                param('webmunkeez_security.jwt.token_ttl'),
                 param('webmunkeez_security.cookie.name'),
+                param('webmunkeez_security.jwt.token_ttl'),
             ])
         ->alias(CookieProviderInterface::class, CookieProvider::class);
 };

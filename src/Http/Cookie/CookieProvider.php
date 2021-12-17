@@ -18,13 +18,13 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 final class CookieProvider implements CookieProviderInterface
 {
-    private string $jwtTokenTTL;
     private string $cookieName;
+    private string $jwtTokenTTL;
 
-    public function __construct(string $jwtTokenTTL, string $cookieName)
+    public function __construct(string $cookieName, string $jwtTokenTTL)
     {
-        $this->jwtTokenTTL = $jwtTokenTTL;
         $this->cookieName = $cookieName;
+        $this->jwtTokenTTL = $jwtTokenTTL;
     }
 
     public function create(string $token): Cookie

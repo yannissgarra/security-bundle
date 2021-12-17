@@ -36,6 +36,6 @@ final class CookieTokenExtractor implements TokenExtractorInterface
 
     public function extract(Request $request): string
     {
-        return $request->cookies->get($this->cookieName);
+        return $request->cookies->get($this->cookieName, '');
     }
 }

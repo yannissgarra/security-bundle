@@ -1,0 +1,35 @@
+framework:
+    test: true
+    secret: test
+    router:
+        utf8: true
+        resource: '%kernel.project_dir%/config/routing.yaml'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in TestBundle/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\:
+        resource: '../TestBundle/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Controller\:
+        resource: '../TestBundle/Controller/'
+        tags: ['controller.service_arguments']
+
+sensio_framework_extra:
+    router:
+        annotations: false
+
+webmunkeez_security:
+    user_provider:
+        id: Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository
+    jwt:
+        secret_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.key'
+        public_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.pem'
+        pass_phrase: 'Webmunkeez Security Bundle JWT Pass Phrase'

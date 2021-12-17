@@ -47,7 +47,7 @@ final class Configuration implements ConfigurationInterface
                             ->cannotBeEmpty()
                         ->end() // public_key
                         ->scalarNode('pass_phrase')->end()
-                        ->integerNode('token_ttl')
+                        ->scalarNode('token_ttl')
                             ->defaultValue('1 year')
                         ->end() // token_ttl
                     ->end()

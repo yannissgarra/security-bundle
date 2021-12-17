@@ -20,7 +20,7 @@ final class AuthorizationHeaderTokenExtractor implements TokenExtractorInterface
 {
     public function supports(Request $request): bool
     {
-        if ($request->headers->has('Authorization')
+        if (true === $request->headers->has('Authorization')
             && 1 === preg_match('/Bearer\s(.+)/', $request->headers->get('Authorization'))) {
             return true;
         }
@@ -30,6 +30,11 @@ final class AuthorizationHeaderTokenExtractor implements TokenExtractorInterface
 
     public function extract(Request $request): string
     {
+        if (false === $request->headers->has('Authorization')
+            || false === preg_match('/Bearer\s(.+)/', $request->headers->get('Authorization'))) {
+            return '';
+        }
+
         return substr($request->headers->get('Authorization'), 7);
     }
 }
