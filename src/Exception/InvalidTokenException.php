@@ -16,4 +16,10 @@ namespace Webmunkeez\SecurityBundle\Exception;
  */
 final class InvalidTokenException extends RuntimeException
 {
+    public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
+    {
+        $message = false === empty($message) ? $message : 'Token is invalid.';
+
+        parent::__construct($message, $code, $previous);
+    }
 }
