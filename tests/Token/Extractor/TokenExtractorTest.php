@@ -13,7 +13,6 @@ namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
@@ -46,7 +45,7 @@ final class TokenExtractorTest extends TestCase
     {
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
 
-        $reflection = new ReflectionClass(TokenExtractor::class);
+        $reflection = new \ReflectionClass(TokenExtractor::class);
 
         $this->assertCount(1, $reflection->getProperty('tokenExtractors')->getValue($this->extractor));
     }
