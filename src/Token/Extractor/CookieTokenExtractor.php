@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Token\Extractor;
 
 use Symfony\Component\HttpFoundation\Request;
+use Webmunkeez\SecurityBundle\Exception\ExtractException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -36,6 +37,10 @@ final class CookieTokenExtractor implements TokenExtractorInterface
 
     public function extract(Request $request): string
     {
-        return $request->cookies->get($this->cookieName, '');
+        if (true === $this->supports($request)) {
+            return $request->cookies->get($this->cookieName, '');
+        }
+
+        throw new ExtractException();
     }
 }

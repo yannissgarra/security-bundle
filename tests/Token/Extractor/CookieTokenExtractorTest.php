@@ -13,6 +13,7 @@ namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Webmunkeez\SecurityBundle\Exception\ExtractException;
 use Webmunkeez\SecurityBundle\Token\Extractor\CookieTokenExtractor;
 
 /**
@@ -55,8 +56,8 @@ final class CookieTokenExtractorTest extends KernelTestCase
 
     public function testExtractFail()
     {
-        $token = $this->extractor->extract($this->invalidRequest);
+        $this->expectException(ExtractException::class);
 
-        $this->assertEquals('', $token);
+        $token = $this->extractor->extract($this->invalidRequest);
     }
 }

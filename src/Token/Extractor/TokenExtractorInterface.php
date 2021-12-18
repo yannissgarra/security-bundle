@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Token\Extractor;
 
 use Symfony\Component\HttpFoundation\Request;
+use Webmunkeez\SecurityBundle\Exception\ExtractException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -20,5 +21,8 @@ interface TokenExtractorInterface
 {
     public function supports(Request $request): bool;
 
+    /**
+     * @throws ExtractException
+     */
     public function extract(Request $request): string;
 }

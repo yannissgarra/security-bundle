@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Token\Extractor;
 
 use Symfony\Component\HttpFoundation\Request;
+use Webmunkeez\SecurityBundle\Exception\ExtractException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -30,11 +31,10 @@ final class AuthorizationHeaderTokenExtractor implements TokenExtractorInterface
 
     public function extract(Request $request): string
     {
-        if (false === $request->headers->has('Authorization')
-            || false === preg_match('/Bearer\s(.+)/', $request->headers->get('Authorization'))) {
-            return '';
+        if (true === $this->supports($request)) {
+            return substr($request->headers->get('Authorization'), 7);
         }
 
-        return substr($request->headers->get('Authorization'), 7);
+        throw new ExtractException();
     }
 }
