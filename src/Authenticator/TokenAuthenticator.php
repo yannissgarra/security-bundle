@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
@@ -54,7 +55,7 @@ final class TokenAuthenticator extends AbstractAuthenticator
 
             $identifier = $decodedToken['identifier'];
 
-            return new SelfValidatingPassport(new UserBadge($identifier, fn (string $identifier) => $this->userProvider->load($identifier)));
+            return new SelfValidatingPassport(new UserBadge($identifier, fn (string $identifier): UserInterface => $this->userProvider->load($identifier)));
         } catch (\Throwable $e) {
             throw new AuthenticationException('', 0, new InvalidTokenException());
         }
