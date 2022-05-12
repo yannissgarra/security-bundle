@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -21,8 +22,11 @@ final class User implements UserInterface
     private string $id;
     private string $role;
 
+    #[Email]
     private string $email;
+
     private string $plainPassword;
+
     public function __construct(string $id, string $role, string $email, string $plainPassword)
     {
         $this->id = $id;
