@@ -13,6 +13,7 @@ namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -25,6 +26,7 @@ final class User implements UserInterface
     #[Email]
     private string $email;
 
+    #[PasswordStrenght(strenght: 1)]
     private string $plainPassword;
 
     public function __construct(string $id, string $role, string $email, string $plainPassword)
