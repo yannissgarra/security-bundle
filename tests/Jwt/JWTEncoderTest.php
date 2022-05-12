@@ -29,10 +29,11 @@ final class JWTEncoderTest extends KernelTestCase
             static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
-        $token = $jwtEncoder->encode('identifier');
+        $token = $jwtEncoder->encode('identifier', ['role' => 'ROLE_USER']);
 
-        $decodedToken = $jwtEncoder->decode($token);
+        $payload = $jwtEncoder->decode($token);
 
-        $this->assertEquals('identifier', $decodedToken['identifier']);
+        $this->assertEquals('identifier', $payload->getUserIdentifier());
+        $this->assertEquals('ROLE_USER', $payload->getData()['role']);
     }
 }

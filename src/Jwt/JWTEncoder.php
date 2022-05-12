@@ -32,7 +32,7 @@ final class JWTEncoder implements JWTEncoderInterface
         $this->jwtTokenTTL = $jwtTokenTTL;
     }
 
-    public function encode(string $identifier): string
+    public function encode(string $userIdentifier, array $data = []): string
     {
         $privateKey = \openssl_pkey_get_private(
             \file_get_contents($this->jwtSecretKeyPath),
@@ -41,14 +41,17 @@ final class JWTEncoder implements JWTEncoderInterface
         $payload = [
             'exp' => (new \DateTime())->modify('+'.$this->jwtTokenTTL)->getTimestamp(),
             'iat' => (new \DateTime())->getTimestamp(),
-            'identifier' => $identifier,
+            'user_identifier' => $userIdentifier,
+            'data' => $data,
         ];
 
         return JWT::encode($payload, $privateKey, 'RS256');
     }
 
-    public function decode(string $token): array
+    public function decode(string $token): JWTPayload
     {
-        return (array) JWT::decode($token, new Key(\file_get_contents($this->jwtPublicKeyPath), 'RS256'));
+        $data = JWT::decode($token, new Key(\file_get_contents($this->jwtPublicKeyPath), 'RS256'));
+
+        return new JWTPayload($data->user_identifier, (array) $data->data);
     }
 }

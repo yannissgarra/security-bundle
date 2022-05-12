@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
 use Webmunkeez\SecurityBundle\Jwt\JWTEncoderInterface;
+use Webmunkeez\SecurityBundle\Jwt\JWTPayload;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
@@ -79,7 +80,7 @@ final class TokenAuthenticatorTest extends TestCase
     public function testAuthenticateSuccess(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
-        $this->jwtEncoder->method('decode')->willReturn(['identifier' => UserRepository::USER_ID_1]);
+        $this->jwtEncoder->method('decode')->willReturn(new JWTPayload(UserRepository::DATA['user-1']['id']));
 
         $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
 
@@ -96,18 +97,18 @@ final class TokenAuthenticatorTest extends TestCase
         }
 
         $this->assertNotNull($userBadge);
-        $this->assertEquals(UserRepository::USER_ID_1, $userBadge->getUserIdentifier());
+        $this->assertEquals(UserRepository::DATA['user-1']['id'], $userBadge->getUserIdentifier());
     }
 
     public function testAuthenticateFail(): void
     {
-        $this->expectException(AuthenticationException::class);
-
         $this->tokenExtractor->method('extract')->willReturn('token');
         $this->jwtEncoder->method('decode')->willThrowException(new \Exception());
 
         $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
 
-        $passport = $tokenAuthenticator->authenticate(new Request());
+        $this->expectException(AuthenticationException::class);
+
+        $tokenAuthenticator->authenticate(new Request());
     }
 }

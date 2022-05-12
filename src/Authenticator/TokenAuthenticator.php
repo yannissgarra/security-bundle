@@ -51,11 +51,9 @@ final class TokenAuthenticator extends AbstractAuthenticator
     {
         try {
             $token = $this->tokenExtractor->extract($request);
-            $decodedToken = $this->jwtEncoder->decode($token);
+            $payload = $this->jwtEncoder->decode($token);
 
-            $identifier = $decodedToken['identifier'];
-
-            return new SelfValidatingPassport(new UserBadge($identifier, fn (string $identifier): UserInterface => $this->userProvider->load($identifier)));
+            return new SelfValidatingPassport(new UserBadge($payload->getUserIdentifier(), fn (string $identifier): UserInterface => $this->userProvider->load($identifier, $payload->getData())));
         } catch (\Throwable $e) {
             throw new AuthenticationException('', 0, new InvalidTokenException());
         }

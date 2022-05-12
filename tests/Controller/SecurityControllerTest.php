@@ -24,7 +24,7 @@ final class SecurityControllerTest extends WebTestCase
     public function testLoginSuccess(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_1);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
 
         $sessionCookie = $client->getCookieJar()->get($client->getKernel()->getContainer()->getParameter('webmunkeez_security.cookie.name'));
 
@@ -34,7 +34,7 @@ final class SecurityControllerTest extends WebTestCase
     public function testLogoutSuccess(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_1);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
         $client->request('GET', SecurityController::LOGOUT_ROUTE_URI);
 
         $sessionCookie = $client->getCookieJar()->get($client->getKernel()->getContainer()->getParameter('webmunkeez_security.cookie.name'));
@@ -45,7 +45,7 @@ final class SecurityControllerTest extends WebTestCase
     public function testProtectedAdminSuccess(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_1);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
         $client->request('GET', SecurityController::PROTECTED_ADMIN_ROUTE_URI);
 
         $this->assertTrue(true);
@@ -66,14 +66,14 @@ final class SecurityControllerTest extends WebTestCase
 
         $client = static::createClient();
         $client->catchExceptions(false);
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_2);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-2']['id']);
         $client->request('GET', SecurityController::PROTECTED_ADMIN_ROUTE_URI);
     }
 
     public function testProtectedUserSuccessAdmin(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_1);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
         $client->request('GET', SecurityController::PROTECTED_USER_ROUTE_URI);
 
         $this->assertTrue(true);
@@ -82,7 +82,7 @@ final class SecurityControllerTest extends WebTestCase
     public function testProtectedUserSuccessUser(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::USER_ID_2);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-2']['id']);
         $client->request('GET', SecurityController::PROTECTED_USER_ROUTE_URI);
 
         $this->assertTrue(true);

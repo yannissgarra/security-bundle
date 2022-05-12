@@ -21,21 +21,36 @@ use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
  */
 final class UserRepository implements UserProviderInterface
 {
-    final public const USER_ID_1 = 'f22ecc77-c093-44e9-90f6-82fb1143337c';
-    final public const USER_ID_2 = '71a60b1c-ab59-40d9-9ae6-fc0830e6b46f';
+    final public const DATA = [
+        'user-1' => [
+            'id' => 'f22ecc77-c093-44e9-90f6-82fb1143337c',
+            'role' => 'ROLE_GOD',
+            'email' => 'user1@example.com',
+            'password' => '@Password2!',
+        ],
+        'user-2' => [
+            'id' => '71a60b1c-ab59-40d9-9ae6-fc0830e6b46f',
+            'role' => 'ROLE_USER',
+            'email' => 'user2@example.com',
+            'password' => '@Password2!',
+        ],
+        ];
 
     /**
      * @return array<string, User>
      */
     public static function users(): array
     {
-        return [
-            self::USER_ID_1 => new User(self::USER_ID_1, 'ROLE_GOD'),
-            self::USER_ID_2 => new User(self::USER_ID_2, 'ROLE_USER'),
-        ];
+        $users = [];
+
+        foreach (self::DATA as $data) {
+            $users[$data['id']] = new User($data['id'], $data['role'], $data['email'], $data['password']);
+        }
+
+        return $users;
     }
 
-    public function load(string $identifier): UserInterface
+    public function load(string $identifier, array $data = []): UserInterface
     {
         if (true === array_key_exists($identifier, self::users())) {
             return self::users()[$identifier];

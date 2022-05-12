@@ -16,10 +16,10 @@ namespace Webmunkeez\SecurityBundle\Jwt;
  */
 interface JWTEncoderInterface
 {
-    public function encode(string $identifier): string;
-
     /**
-     * @return array<string, mixed>
+     * @param array<string, mixed> $data
      */
-    public function decode(string $token): array;
+    public function encode(string $userIdentifier, array $data = []): string;
+
+    public function decode(string $token): JWTPayload;
 }

@@ -21,10 +21,14 @@ final class User implements UserInterface
     private string $id;
     private string $role;
 
-    public function __construct(string $id, string $role)
+    private string $email;
+    private string $plainPassword;
+    public function __construct(string $id, string $role, string $email, string $plainPassword)
     {
         $this->id = $id;
         $this->role = $role;
+        $this->email = $email;
+        $this->plainPassword = $plainPassword;
     }
 
     public function getUserIdentifier(): string
