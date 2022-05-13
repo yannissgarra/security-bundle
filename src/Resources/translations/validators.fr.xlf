@@ -3,12 +3,12 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>This email address is invalid.</source>
-                <target>Questo indirizzo email non è valido.</target>
+                <source>This email address is not valid.</source>
+                <target>Cette adresse email n'est pas valide.</target>
             </trans-unit>
             <trans-unit id="2">
                 <source>This password is not complex enough.</source>
-                <target>Questa password non è abbastanza complessa.</target>
+                <target>Ce mot de passe n'est pas assez complexe.</target>
             </trans-unit>
         </body>
     </file>

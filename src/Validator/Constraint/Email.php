@@ -19,5 +19,5 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 final class Email extends Constraint
 {
-    public string $message = 'This email address is invalid.';
+    public string $message = 'This email address is not valid.';
 }
