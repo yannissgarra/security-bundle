@@ -28,9 +28,10 @@ final class PasswordStrenghtValidatorTest extends TestCase
     public function testValidate()
     {
         $validator = new PasswordStrenghtValidator();
-        $result = $validator->validate('@Password2!', new PasswordStrenght());
 
-        $this->assertNull($result);
+        $this->expectNotToPerformAssertions();
+
+        $result = $validator->validate('@Password2!', new PasswordStrenght());
     }
 
     public function testValidateException()

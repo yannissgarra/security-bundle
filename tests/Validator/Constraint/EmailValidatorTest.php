@@ -28,9 +28,10 @@ final class EmailValidatorTest extends TestCase
     public function testValidate()
     {
         $validator = new EmailValidator();
-        $result = $validator->validate('hello@yannissgarra.com', new Email());
 
-        $this->assertNull($result);
+        $this->expectNotToPerformAssertions();
+
+        $validator->validate('hello@yannissgarra.com', new Email());
     }
 
     public function testValidateException()
