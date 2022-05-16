@@ -21,7 +21,7 @@ use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
  */
 final class UserRepository implements UserProviderInterface
 {
-    final public const DATA = [
+    public const DATA = [
         'user-1' => [
             'id' => 'f22ecc77-c093-44e9-90f6-82fb1143337c',
             'role' => 'ROLE_GOD',

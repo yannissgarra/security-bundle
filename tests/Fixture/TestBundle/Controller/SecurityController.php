@@ -23,11 +23,11 @@ use Webmunkeez\SecurityBundle\Jwt\JWTEncoderInterface;
  */
 final class SecurityController
 {
-    final public const LOGIN_ROUTE_URI = '/login';
-    final public const LOGOUT_ROUTE_URI = '/logout';
-    final public const PROTECTED_ADMIN_ROUTE_URI = '/protected-admin';
-    final public const PROTECTED_USER_ROUTE_URI = '/protected-user';
-    final public const UNPROTECTED_ROUTE_URI = '/unprotected';
+    public const LOGIN_ROUTE_URI = '/login';
+    public const LOGOUT_ROUTE_URI = '/logout';
+    public const PROTECTED_ADMIN_ROUTE_URI = '/protected-admin';
+    public const PROTECTED_USER_ROUTE_URI = '/protected-user';
+    public const UNPROTECTED_ROUTE_URI = '/unprotected';
 
     private ParameterBagInterface $parameterBag;
     private CookieProviderInterface $cookieProvider;

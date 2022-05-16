@@ -21,7 +21,7 @@ use Webmunkeez\SecurityBundle\DependencyInjection\Configuration;
  */
 final class ConfigurationTest extends TestCase
 {
-    final public const CONFIG = [
+    public const CONFIG = [
         'user_provider' => [
             'id' => 'user_provider_id_value',
         ],
