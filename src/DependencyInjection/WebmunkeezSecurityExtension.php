@@ -19,6 +19,8 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
+use Webmunkeez\SecurityBundle\Authorization\AuthorizationChecker;
+use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -29,6 +31,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
     {
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $loader->load('authenticators.php');
+        $loader->load('authorization.php');
         $loader->load('http.php');
         $loader->load('jwt.php');
         $loader->load('token.php');
@@ -44,6 +47,9 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
         $container->setParameter('webmunkeez_security.jwt.secret_key_path', $config['jwt']['secret_key_path']);
         $container->setParameter('webmunkeez_security.jwt.pass_phrase', $config['jwt']['pass_phrase']);
         $container->setParameter('webmunkeez_security.jwt.token_ttl', $config['jwt']['token_ttl']);
+
+        $container->registerForAutoconfiguration(AuthorizationCheckerAwareInterface::class)
+            ->addMethodCall('setAuthorizationChecker', [new Reference(AuthorizationChecker::class)]);
     }
 
     public function prepend(ContainerBuilder $container)
