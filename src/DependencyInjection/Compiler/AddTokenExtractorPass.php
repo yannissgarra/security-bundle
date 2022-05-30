@@ -14,7 +14,7 @@ namespace Webmunkeez\SecurityBundle\DependencyInjection\Compiler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
+use Webmunkeez\SecurityBundle\Token\TokenExtractor;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

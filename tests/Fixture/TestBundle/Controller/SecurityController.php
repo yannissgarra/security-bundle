@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProviderInterface;
-use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

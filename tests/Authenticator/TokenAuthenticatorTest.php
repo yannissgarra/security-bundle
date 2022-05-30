@@ -22,8 +22,8 @@ use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
 use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository;
-use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
+use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

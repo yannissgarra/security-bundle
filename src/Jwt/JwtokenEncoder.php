@@ -16,12 +16,12 @@ use Firebase\JWT\Key;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
 use Webmunkeez\SecurityBundle\Exception\TokenEncodingException;
-use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class JWTEncoder implements TokenEncoderInterface
+final class JWTTokenEncoder implements TokenEncoderInterface
 {
     private string $jwtPublicKeyPath;
     private string $jwtSecretKeyPath;

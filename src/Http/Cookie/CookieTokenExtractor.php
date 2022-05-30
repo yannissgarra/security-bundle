@@ -13,7 +13,7 @@ namespace Webmunkeez\SecurityBundle\Http\Cookie;
 
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

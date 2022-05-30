@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractor;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(TokenExtractor::class)
-            ->alias(TokenExtractorInterface::class, TokenExtractor::class);
+        ->alias(TokenExtractorInterface::class, TokenExtractor::class);
 };

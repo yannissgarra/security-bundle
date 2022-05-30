@@ -9,14 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
+namespace Webmunkeez\SecurityBundle\Test\Token;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractor;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

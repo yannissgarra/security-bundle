@@ -22,8 +22,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
-use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
+use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

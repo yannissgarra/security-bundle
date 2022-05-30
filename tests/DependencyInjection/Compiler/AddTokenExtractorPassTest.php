@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Webmunkeez\SecurityBundle\DependencyInjection\Compiler\AddTokenExtractorPass;
-use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
+use Webmunkeez\SecurityBundle\Token\TokenExtractor;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

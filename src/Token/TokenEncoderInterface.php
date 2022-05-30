@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Token\Encoder;
+namespace Webmunkeez\SecurityBundle\Token;
 
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Token\Extractor;
+namespace Webmunkeez\SecurityBundle\Token;
 
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
