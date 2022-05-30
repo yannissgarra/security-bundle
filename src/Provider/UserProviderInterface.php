@@ -20,9 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface UserProviderInterface
 {
     /**
-     * @param array<string, mixed> $data
-     *
      * @throws UserNotFoundException
      */
-    public function load(string $identifier, array $data = []): UserInterface;
+    public function load(string $identifier): UserInterface;
 }

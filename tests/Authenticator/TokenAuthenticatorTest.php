@@ -17,11 +17,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
-use Webmunkeez\SecurityBundle\Jwt\JWTEncoderInterface;
-use Webmunkeez\SecurityBundle\Jwt\JWTPayload;
+use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository;
+use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
 
 /**
@@ -30,9 +31,9 @@ use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
 final class TokenAuthenticatorTest extends TestCase
 {
     /**
-     * @var JWTEncoderInterface&MockObject
+     * @var TokenEncoderInterface&MockObject
      */
-    private JWTEncoderInterface $jwtEncoder;
+    private TokenEncoderInterface $tokenEncoder;
 
     /**
      * @var TokenExtractorInterface&MockObject
@@ -46,7 +47,7 @@ final class TokenAuthenticatorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->jwtEncoder = $this->getMockBuilder(JWTEncoderInterface::class)
+        $this->tokenEncoder = $this->getMockBuilder(TokenEncoderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -63,7 +64,7 @@ final class TokenAuthenticatorTest extends TestCase
     {
         $this->tokenExtractor->method('supports')->willReturn(true);
 
-        $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
+        $tokenAuthenticator = new TokenAuthenticator($this->tokenEncoder, $this->tokenExtractor, $this->userProvider);
 
         $this->assertTrue($tokenAuthenticator->supports(new Request()));
     }
@@ -72,7 +73,7 @@ final class TokenAuthenticatorTest extends TestCase
     {
         $this->tokenExtractor->method('supports')->willReturn(false);
 
-        $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
+        $tokenAuthenticator = new TokenAuthenticator($this->tokenEncoder, $this->tokenExtractor, $this->userProvider);
 
         $this->assertFalse($tokenAuthenticator->supports(new Request()));
     }
@@ -80,9 +81,9 @@ final class TokenAuthenticatorTest extends TestCase
     public function testAuthenticateSuccess(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
-        $this->jwtEncoder->method('decode')->willReturn(new JWTPayload(UserRepository::DATA['user-1']['id']));
+        $this->tokenEncoder->method('decode')->willReturn(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
-        $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
+        $tokenAuthenticator = new TokenAuthenticator($this->tokenEncoder, $this->tokenExtractor, $this->userProvider);
 
         $passport = $tokenAuthenticator->authenticate(new Request());
 
@@ -103,9 +104,9 @@ final class TokenAuthenticatorTest extends TestCase
     public function testAuthenticateFail(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
-        $this->jwtEncoder->method('decode')->willThrowException(new \Exception());
+        $this->tokenEncoder->method('decode')->willThrowException(new TokenDecodingException());
 
-        $tokenAuthenticator = new TokenAuthenticator($this->jwtEncoder, $this->tokenExtractor, $this->userProvider);
+        $tokenAuthenticator = new TokenAuthenticator($this->tokenEncoder, $this->tokenExtractor, $this->userProvider);
 
         $this->expectException(AuthenticationException::class);
 

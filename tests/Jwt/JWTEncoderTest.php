@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Test\Jwt;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Jwt\JWTEncoder;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -29,11 +31,10 @@ final class JWTEncoderTest extends KernelTestCase
             static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
-        $token = $jwtEncoder->encode('identifier', ['role' => 'ROLE_USER']);
+        $token = $jwtEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
-        $payload = $jwtEncoder->decode($token);
+        $userId = $jwtEncoder->decode($token);
 
-        $this->assertEquals('identifier', $payload->getUserIdentifier());
-        $this->assertEquals('ROLE_USER', $payload->getData()['role']);
+        $this->assertSame(UserRepository::DATA['user-1']['id'], $userId->toRfc4122());
     }
 }

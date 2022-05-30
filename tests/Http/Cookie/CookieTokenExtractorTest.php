@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
+namespace Webmunkeez\SecurityBundle\Test\Http\Cookie;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
-use Webmunkeez\SecurityBundle\Token\Extractor\CookieTokenExtractor;
+use Webmunkeez\SecurityBundle\Http\Cookie\CookieTokenExtractor;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

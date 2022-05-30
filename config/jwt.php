@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Webmunkeez\SecurityBundle\Jwt\JWTEncoder;
-use Webmunkeez\SecurityBundle\Jwt\JWTEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
@@ -23,5 +23,5 @@ return static function (ContainerConfigurator $container) {
                 param('webmunkeez_security.jwt.pass_phrase'),
                 param('webmunkeez_security.jwt.token_ttl'),
             ])
-        ->alias(JWTEncoderInterface::class, JWTEncoder::class);
+        ->alias(TokenEncoderInterface::class, JWTEncoder::class);
 };

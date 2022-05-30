@@ -13,13 +13,15 @@ namespace Webmunkeez\SecurityBundle\Jwt;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
 use Webmunkeez\SecurityBundle\Exception\TokenEncodingException;
+use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class JWTEncoder implements JWTEncoderInterface
+final class JWTEncoder implements TokenEncoderInterface
 {
     private string $jwtSecretKeyPath;
     private string $jwtPublicKeyPath;
@@ -34,7 +36,7 @@ final class JWTEncoder implements JWTEncoderInterface
         $this->jwtTokenTTL = $jwtTokenTTL;
     }
 
-    public function encode(string $userIdentifier, array $data = []): string
+    public function encode(Uuid $userId): string
     {
         try {
             $privateKey = \openssl_pkey_get_private(
@@ -44,8 +46,7 @@ final class JWTEncoder implements JWTEncoderInterface
             $payload = [
                 'exp' => (new \DateTime())->modify('+'.$this->jwtTokenTTL)->getTimestamp(),
                 'iat' => (new \DateTime())->getTimestamp(),
-                'user_identifier' => $userIdentifier,
-                'data' => $data,
+                'user_id' => $userId->toRfc4122(),
             ];
 
             return JWT::encode($payload, $privateKey, 'RS256');
@@ -54,12 +55,12 @@ final class JWTEncoder implements JWTEncoderInterface
         }
     }
 
-    public function decode(string $token): JWTPayload
+    public function decode(string $token): Uuid
     {
         try {
             $data = JWT::decode($token, new Key(\file_get_contents($this->jwtPublicKeyPath), 'RS256'));
 
-            return new JWTPayload($data->user_identifier, (array) $data->data);
+            return Uuid::fromString($data->user_id);
         } catch (\Throwable $e) {
             throw new TokenDecodingException($e->getMessage(), $e->getCode(), $e);
         }

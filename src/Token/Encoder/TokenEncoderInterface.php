@@ -9,25 +9,24 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Jwt;
+namespace Webmunkeez\SecurityBundle\Token\Encoder;
 
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
 use Webmunkeez\SecurityBundle\Exception\TokenEncodingException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-interface JWTEncoderInterface
+interface TokenEncoderInterface
 {
     /**
-     * @param array<string, mixed> $data
-     *
      * @throws TokenEncodingException
      */
-    public function encode(string $userIdentifier, array $data = []): string;
+    public function encode(Uuid $userId): string;
 
     /**
      * @throws TokenDecodingException
      */
-    public function decode(string $token): JWTPayload;
+    public function decode(string $token): Uuid;
 }

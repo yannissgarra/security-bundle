@@ -15,8 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProviderInterface;
-use Webmunkeez\SecurityBundle\Jwt\JWTEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -31,19 +32,19 @@ final class SecurityController
 
     private ParameterBagInterface $parameterBag;
     private CookieProviderInterface $cookieProvider;
-    private JWTEncoderInterface $jwtEncoder;
+    private TokenEncoderInterface $tokenEncoder;
 
-    public function __construct(ParameterBagInterface $parameterBag, CookieProviderInterface $cookieProvider, JWTEncoderInterface $jwtEncoder)
+    public function __construct(ParameterBagInterface $parameterBag, CookieProviderInterface $cookieProvider, TokenEncoderInterface $tokenEncoder)
     {
         $this->parameterBag = $parameterBag;
         $this->cookieProvider = $cookieProvider;
-        $this->jwtEncoder = $jwtEncoder;
+        $this->tokenEncoder = $tokenEncoder;
     }
 
     #[Route(self::LOGIN_ROUTE_URI.'/{identifier}')]
     public function login(string $identifier): Response
     {
-        $token = $this->jwtEncoder->encode($identifier);
+        $token = $this->tokenEncoder->encode(Uuid::fromString($identifier));
 
         $response = new Response('Logged in!');
         $response->headers->setCookie($this->cookieProvider->create($token));

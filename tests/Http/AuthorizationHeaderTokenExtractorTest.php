@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
+namespace Webmunkeez\SecurityBundle\Test\Http;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
-use Webmunkeez\SecurityBundle\Token\Extractor\AuthorizationHeaderTokenExtractor;
+use Webmunkeez\SecurityBundle\Http\AuthorizationHeaderTokenExtractor;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

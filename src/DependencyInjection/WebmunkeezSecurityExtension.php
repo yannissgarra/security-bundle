@@ -31,7 +31,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
         $loader->load('authenticators.php');
         $loader->load('http.php');
         $loader->load('jwt.php');
-        $loader->load('token_extractors.php');
+        $loader->load('token.php');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
