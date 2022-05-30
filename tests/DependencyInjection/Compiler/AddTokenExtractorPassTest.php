@@ -36,7 +36,7 @@ final class AddTokenExtractorPassTest extends TestCase
         $this->container->setDefinition(TokenExtractor::class, $this->managerDefinition);
     }
 
-    public function testProcess()
+    public function testProcessWithPrioritizedTokenExtractorsShouldSucceed()
     {
         $tokenExtractor1 = new Definition();
         $tokenExtractor1->setTags(['webmunkeez_security.token_extractor' => [

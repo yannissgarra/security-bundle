@@ -72,7 +72,7 @@ final class TokenExtractorTest extends TestCase
 
         $token = $this->extractor->extract(new Request());
 
-        $this->assertEquals('token', $token);
+        $this->assertSame('token', $token);
     }
 
     public function testExtractShouldFail()

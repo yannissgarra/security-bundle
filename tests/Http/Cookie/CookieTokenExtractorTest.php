@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Http\Cookie;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieTokenExtractor;
@@ -19,7 +19,7 @@ use Webmunkeez\SecurityBundle\Http\Cookie\CookieTokenExtractor;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class CookieTokenExtractorTest extends KernelTestCase
+final class CookieTokenExtractorTest extends TestCase
 {
     private CookieTokenExtractor $extractor;
     private Request $validRequest;
@@ -27,37 +27,35 @@ final class CookieTokenExtractorTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        static::bootKernel();
-
-        $this->extractor = new CookieTokenExtractor(static::$kernel->getContainer()->getParameter('webmunkeez_security.cookie.name'));
+        $this->extractor = new CookieTokenExtractor('SESSION');
 
         $this->validRequest = new Request();
-        $this->validRequest->cookies->set(static::$kernel->getContainer()->getParameter('webmunkeez_security.cookie.name'), 'token');
+        $this->validRequest->cookies->set('SESSION', 'token');
 
         $this->invalidRequest = new Request();
     }
 
-    public function testSupportsSuccess()
+    public function testSupportsWithCookieShouldSucceed()
     {
         $this->assertTrue($this->extractor->supports($this->validRequest));
     }
 
-    public function testSupportsFail()
+    public function testSupportsWithoutCookieShouldFail()
     {
         $this->assertFalse($this->extractor->supports($this->invalidRequest));
     }
 
-    public function testExtractSuccess()
+    public function testExtractWithCookieShouldSucceed()
     {
         $token = $this->extractor->extract($this->validRequest);
 
-        $this->assertEquals('token', $token);
+        $this->assertSame('token', $token);
     }
 
-    public function testExtractFail()
+    public function testExtractWithoutCookieShouldFail()
     {
         $this->expectException(TokenExtractionException::class);
 
-        $token = $this->extractor->extract($this->invalidRequest);
+        $this->extractor->extract($this->invalidRequest);
     }
 }

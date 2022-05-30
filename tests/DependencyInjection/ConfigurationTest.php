@@ -25,26 +25,26 @@ final class ConfigurationTest extends TestCase
         'user_provider' => [
             'id' => 'user_provider_id_value',
         ],
-        'jwt' => [
-            'secret_key_path' => 'jwt_secret_key_path_value',
-            'public_key_path' => 'jwt_public_key_path_value',
-            'pass_phrase' => 'jwt_pass_phrase_value',
-            'token_ttl' => 'jwt_token_ttl_value',
-        ],
         'cookie' => [
             'name' => 'cookie_name_value',
         ],
+        'jwt' => [
+            'public_key_path' => 'jwt_public_key_path_value',
+            'secret_key_path' => 'jwt_secret_key_path_value',
+            'pass_phrase' => 'jwt_pass_phrase_value',
+            'token_ttl' => 'jwt_token_ttl_value',
+        ],
     ];
 
-    public function testConfiguration()
+    public function testProcessWithFullConfigurationShouldSucceed()
     {
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => self::CONFIG]);
 
-        $this->assertEquals(self::CONFIG, $config);
+        $this->assertSame(self::CONFIG, $config);
     }
 
-    public function testJwtTtlDefaultConfiguration()
+    public function testProcessWithoutJwtTtlShouldSucceed()
     {
         $config = self::CONFIG;
         unset($config['jwt']['token_ttl']);
@@ -55,10 +55,10 @@ final class ConfigurationTest extends TestCase
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertEquals($configTest, $config);
+        $this->assertSame($configTest, $config);
     }
 
-    public function testCookieNameDefaultConfiguration()
+    public function testProcessWithoutCookieNameShouldSucceed()
     {
         $config = self::CONFIG;
         unset($config['cookie']['name']);
@@ -69,10 +69,10 @@ final class ConfigurationTest extends TestCase
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertEquals($configTest, $config);
+        $this->assertSame($configTest, $config);
     }
 
-    public function testNoConfiguration()
+    public function testProcessWithoutConfigurationShoulFail()
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -80,7 +80,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), []);
     }
 
-    public function testNoProviderConfiguration()
+    public function testProcessWithoutProviderShouldFail()
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -91,7 +91,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testNoProviderIdConfiguration()
+    public function testProcessWithoutProviderIdShouldFail()
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -102,7 +102,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testNoJwtConfiguration()
+    public function testProcessWithoutJwtShouldFail()
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -113,23 +113,23 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testNoJwtSecretKeyConfiguration()
-    {
-        $this->expectException(InvalidConfigurationException::class);
-
-        $config = self::CONFIG;
-        unset($config['jwt']['secret_key_path']);
-
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
-    }
-
-    public function testNoJwtPublicKeyConfiguration()
+    public function testProcessWithoutJwtPublicKeyShouldFail()
     {
         $this->expectException(InvalidConfigurationException::class);
 
         $config = self::CONFIG;
         unset($config['jwt']['public_key_path']);
+
+        $processor = new Processor();
+        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+    }
+
+    public function testProcessWithoutJwtSecretKeyShouldFail()
+    {
+        $this->expectException(InvalidConfigurationException::class);
+
+        $config = self::CONFIG;
+        unset($config['jwt']['secret_key_path']);
 
         $processor = new Processor();
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);

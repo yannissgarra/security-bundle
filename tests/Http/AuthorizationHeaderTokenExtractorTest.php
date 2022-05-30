@@ -35,27 +35,27 @@ final class AuthorizationHeaderTokenExtractorTest extends TestCase
         $this->invalidRequest = new Request();
     }
 
-    public function testSupportsSuccess()
+    public function testSupportsWithAuthorizationBearerShouldSucceed()
     {
         $this->assertTrue($this->extractor->supports($this->validRequest));
     }
 
-    public function testSupportsFail()
+    public function testSupportsWithoutAuthorizationBearerShouldFail()
     {
         $this->assertFalse($this->extractor->supports($this->invalidRequest));
     }
 
-    public function testExtractSuccess()
+    public function testExtractWithAuthorizationBearerShouldSucceed()
     {
         $token = $this->extractor->extract($this->validRequest);
 
-        $this->assertEquals('token', $token);
+        $this->assertSame('token', $token);
     }
 
-    public function testExtractFail()
+    public function testExtractWithoutAuthorizationBearerShouldFail()
     {
         $this->expectException(TokenExtractionException::class);
 
-        $token = $this->extractor->extract($this->invalidRequest);
+        $this->extractor->extract($this->invalidRequest);
     }
 }
