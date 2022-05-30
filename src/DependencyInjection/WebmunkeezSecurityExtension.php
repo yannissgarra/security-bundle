@@ -51,9 +51,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
         // define default config for security
         $container->prependExtensionConfig('security', [
             'enable_authenticator_manager' => true,
-            'password_hashers' => [
-                PasswordAuthenticatedUserInterface::class => 'auto',
-            ],
+            'password_hashers' => $this->definePasswordHashers($container->getParameter('kernel.environment')),
             'firewalls' => [
                 'dev' => [
                     'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
@@ -71,22 +69,27 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
                 'ROLE_EDITOR' => 'ROLE_USER',
             ],
         ]);
+    }
 
-        // By default, password hashers are resource intensive and take time. This is
-        // important to generate secure password hashes. In tests however, secure hashes
-        // are not important, waste resources and increase test times. The following
-        // reduces the work factor to the lowest possible values.
-        if ('test' === $container->getParameter('kernel.environment')) {
-            $container->prependExtensionConfig('security', [
-                'password_hashers' => [
-                    PasswordAuthenticatedUserInterface::class => [
-                        'algorithm' => 'auto',
-                        'cost' => 4, // Lowest possible value for bcrypt
-                        'time_cost' => 3, // Lowest possible value for argon
-                        'memory_cost' => 10, // Lowest possible value for argon
-                    ],
+    private function definePasswordHashers(string $environment): array
+    {
+        if ('test' === $environment) {
+            // By default, password hashers are resource intensive and take time. This is
+            // important to generate secure password hashes. In tests however, secure hashes
+            // are not important, waste resources and increase test times. The following
+            // reduces the work factor to the lowest possible values.
+            return [
+                PasswordAuthenticatedUserInterface::class => [
+                    'algorithm' => 'auto',
+                    'cost' => 4, // Lowest possible value for bcrypt
+                    'time_cost' => 3, // Lowest possible value for argon
+                    'memory_cost' => 10, // Lowest possible value for argon,
                 ],
-            ]);
+            ];
         }
+
+        return [
+            PasswordAuthenticatedUserInterface::class => 'auto',
+        ];
     }
 }
