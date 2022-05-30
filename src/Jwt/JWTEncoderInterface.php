@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Jwt;
 
+use Webmunkeez\SecurityBundle\Exception\TokenDecodingException;
+use Webmunkeez\SecurityBundle\Exception\TokenEncodingException;
+
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
@@ -18,8 +21,13 @@ interface JWTEncoderInterface
 {
     /**
      * @param array<string, mixed> $data
+     *
+     * @throws TokenEncodingException
      */
     public function encode(string $userIdentifier, array $data = []): string;
 
+    /**
+     * @throws TokenDecodingException
+     */
     public function decode(string $token): JWTPayload;
 }
