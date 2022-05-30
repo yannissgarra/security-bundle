@@ -14,7 +14,7 @@ namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Webmunkeez\SecurityBundle\Exception\ExtractException;
+use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractor;
 use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
 
@@ -81,7 +81,7 @@ final class TokenExtractorTest extends TestCase
 
     public function testExtractFail()
     {
-        $this->expectException(ExtractException::class);
+        $this->expectException(TokenExtractionException::class);
 
         $this->randomTokenExtractor->method('supports')->willReturn(false);
         $this->randomTokenExtractor->method('extract')->willReturn('');

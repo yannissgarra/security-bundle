@@ -13,7 +13,7 @@ namespace Webmunkeez\SecurityBundle\Test\Token\Extractor;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Webmunkeez\SecurityBundle\Exception\ExtractException;
+use Webmunkeez\SecurityBundle\Exception\TokenExtractionException;
 use Webmunkeez\SecurityBundle\Token\Extractor\AuthorizationHeaderTokenExtractor;
 
 /**
@@ -54,7 +54,7 @@ final class AuthorizationHeaderTokenExtractorTest extends TestCase
 
     public function testExtractFail()
     {
-        $this->expectException(ExtractException::class);
+        $this->expectException(TokenExtractionException::class);
 
         $token = $this->extractor->extract($this->invalidRequest);
     }
