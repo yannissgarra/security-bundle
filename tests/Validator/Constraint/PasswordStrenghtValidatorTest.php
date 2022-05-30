@@ -25,60 +25,82 @@ use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenghtValidator;
  */
 final class PasswordStrenghtValidatorTest extends TestCase
 {
-    public function testValidate()
+    /**
+     * @var ConstraintViolationBuilderInterface&MockObject
+     */
+    private ConstraintViolationBuilderInterface $constraintViolationBuilder;
+
+    /**
+     * @var ExecutionContextInterface&MockObject
+     */
+    private ExecutionContextInterface $executionContext;
+
+    protected function setUp(): void
+    {
+        /** @var ConstraintViolationBuilderInterface&MockObject $constraintViolationBuilder */
+        $constraintViolationBuilder = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)->disableOriginalConstructor()->getMock();
+        $this->constraintViolationBuilder = $constraintViolationBuilder;
+
+        /** @var ExecutionContextInterface&MockObject $executionContext */
+        $executionContext = $this->getMockBuilder(ExecutionContextInterface::class)->disableOriginalConstructor()->getMock();
+        $this->executionContext = $executionContext;
+    }
+
+    public function testValidateShouldSucceed()
     {
         $validator = new PasswordStrenghtValidator();
 
         $this->expectNotToPerformAssertions();
 
-        $result = $validator->validate('@Password2!', new PasswordStrenght());
+        $validator->validate('@Password2!', new PasswordStrenght());
     }
 
-    public function testValidateException()
+    public function testValidateWithLowPassorwStrenghtRequiredShouldSucceed()
     {
-        /** @var ExecutionContextInterface&MockObject $executionContext */
-        $executionContext = $this->getMockBuilder(ExecutionContextInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $validator = new PasswordStrenghtValidator();
 
-        /** @var ConstraintViolationBuilderInterface&MockObject $constraintViolationBuilder */
-        $constraintViolationBuilder = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->expectNotToPerformAssertions();
 
-        $this->validator = new PasswordStrenghtValidator();
+        $validator->validate('password', new PasswordStrenght(0));
+    }
+
+    public function testValidateWithLowPasswordStrenghtShouldFail()
+    {
+        $validator = new PasswordStrenghtValidator();
         $constraint = new PasswordStrenght();
 
-        $constraintViolationBuilder->expects($this->exactly(4))
-            ->method('addViolation')
-            ->willReturn(null);
+        $this->constraintViolationBuilder->expects($this->exactly(4))->method('addViolation')->willReturn(null);
 
-        $executionContext->expects($this->exactly(4))
-            ->method('buildViolation')
-            ->with($constraint->message)
-            ->willReturn($constraintViolationBuilder);
+        $this->executionContext->expects($this->exactly(4))->method('buildViolation')->with($constraint->message)->willReturn($this->constraintViolationBuilder);
 
-        $this->validator->initialize($executionContext);
-        $this->validator->validate('password', $constraint);
-        $this->validator->validate('Password', $constraint);
-        $this->validator->validate('Password2', $constraint);
-        $this->validator->validate('Password2!', $constraint);
+        $validator->initialize($this->executionContext);
 
-        $constraint = new PasswordStrenght(0);
-        $this->validator->validate('password', $constraint);
+        $validator->validate('password', $constraint);
+        $validator->validate('Password', $constraint);
+        $validator->validate('Password2', $constraint);
+        $validator->validate('Password2!', $constraint);
     }
 
-    public function testValidateAttribute()
+    public function testValidateAttributeShouldSucceed()
+    {
+        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
+
+        $user = new User('id', 'role', 'hello@yannissgarra.com', 'password2');
+
+        $violations = $validator->validate($user);
+
+        $this->assertCount(0, $violations);
+    }
+
+    public function testValidateAttributeWithLowPasswordStrenghtShouldFail()
     {
         $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
 
         $user = new User('id', 'role', 'hello@yannissgarra.com', 'password');
-        $violations = $validator->validate($user);
-        $this->assertCount(1, $violations);
-        $this->assertEquals((new PasswordStrenght())->message, $violations[0]->getMessage());
 
-        $user = new User('id', 'role', 'hello@yannissgarra.com', 'password2');
         $violations = $validator->validate($user);
-        $this->assertCount(0, $violations);
+
+        $this->assertCount(1, $violations);
+        $this->assertSame((new PasswordStrenght())->message, $violations[0]->getMessage());
     }
 }

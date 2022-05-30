@@ -39,9 +39,7 @@ final class JWTEncoder implements TokenEncoderInterface
     public function encode(Uuid $userId): string
     {
         try {
-            $privateKey = \openssl_pkey_get_private(
-            \file_get_contents($this->jwtSecretKeyPath),
-            $this->jwtPassPhrase);
+            $privateKey = \openssl_pkey_get_private(\file_get_contents($this->jwtSecretKeyPath), $this->jwtPassPhrase);
 
             $payload = [
                 'exp' => (new \DateTime())->modify('+'.$this->jwtTokenTTL)->getTimestamp(),

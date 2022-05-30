@@ -25,7 +25,28 @@ use Webmunkeez\SecurityBundle\Validator\Constraint\EmailValidator;
  */
 final class EmailValidatorTest extends TestCase
 {
-    public function testValidate()
+    /**
+     * @var ConstraintViolationBuilderInterface&MockObject
+     */
+    private ConstraintViolationBuilderInterface $constraintViolationBuilder;
+
+    /**
+     * @var ExecutionContextInterface&MockObject
+     */
+    private ExecutionContextInterface $executionContext;
+
+    protected function setUp(): void
+    {
+        /** @var ConstraintViolationBuilderInterface&MockObject $constraintViolationBuilder */
+        $constraintViolationBuilder = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)->disableOriginalConstructor()->getMock();
+        $this->constraintViolationBuilder = $constraintViolationBuilder;
+
+        /** @var ExecutionContextInterface&MockObject $executionContext */
+        $executionContext = $this->getMockBuilder(ExecutionContextInterface::class)->disableOriginalConstructor()->getMock();
+        $this->executionContext = $executionContext;
+    }
+
+    public function testValidateShouldSucceed()
     {
         $validator = new EmailValidator();
 
@@ -34,46 +55,66 @@ final class EmailValidatorTest extends TestCase
         $validator->validate('hello@yannissgarra.com', new Email());
     }
 
-    public function testValidateException()
+    public function testValidateWithWrongEmailFormatShouldFail()
     {
-        /** @var ExecutionContextInterface&MockObject $executionContext */
-        $executionContext = $this->getMockBuilder(ExecutionContextInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        /** @var ConstraintViolationBuilderInterface&MockObject $constraintViolationBuilder */
-        $constraintViolationBuilder = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->validator = new EmailValidator();
+        $validator = new EmailValidator();
         $constraint = new Email();
 
-        $constraintViolationBuilder->expects($this->exactly(2))
-            ->method('addViolation')
-            ->willReturn(null);
+        $this->constraintViolationBuilder->expects($this->once())->method('addViolation')->willReturn(null);
 
-        $executionContext->expects($this->exactly(2))
-            ->method('buildViolation')
-            ->with($constraint->message)
-            ->willReturn($constraintViolationBuilder);
+        $this->executionContext->expects($this->once())->method('buildViolation')->with($constraint->message)->willReturn($this->constraintViolationBuilder);
 
-        $this->validator->initialize($executionContext);
-        $this->validator->validate('email', $constraint);
-        $this->validator->validate('contact@example.com', $constraint);
+        $validator->initialize($this->executionContext);
+
+        $validator->validate('email', $constraint);
     }
 
-    public function testValidateAttribute()
+    public function testValidateWithNotExistingEmailMXShouldFail()
+    {
+        $validator = new EmailValidator();
+        $constraint = new Email();
+
+        $this->constraintViolationBuilder->expects($this->once())->method('addViolation')->willReturn(null);
+
+        $this->executionContext->expects($this->once())->method('buildViolation')->with($constraint->message)->willReturn($this->constraintViolationBuilder);
+
+        $validator->initialize($this->executionContext);
+
+        $validator->validate('contact@example.com', $constraint);
+    }
+
+    public function testValidateAttributeShouldSucceed()
     {
         $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
 
-        $user = new User('id', 'role', 'contact@example.com', 'password2');
-        $violations = $validator->validate($user);
-        $this->assertCount(1, $violations);
-        $this->assertEquals((new Email())->message, $violations[0]->getMessage());
+        $user = new User('id', 'role', 'hello@yannissgarra.com', '@Password2!');
 
-        $user = new User('id', 'role', 'hello@yannissgarra.com', 'password2');
         $violations = $validator->validate($user);
+
         $this->assertCount(0, $violations);
+    }
+
+    public function testValidateAttributeWithWrongEmailFormatShouldFail()
+    {
+        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
+
+        $user = new User('id', 'role', 'email', '@Password2!');
+
+        $violations = $validator->validate($user);
+
+        $this->assertCount(1, $violations);
+        $this->assertSame((new Email())->message, $violations[0]->getMessage());
+    }
+
+    public function testValidateAttributeWithNotExistingEmailMXShouldFail()
+    {
+        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
+
+        $user = new User('id', 'role', 'contact@example.com', '@Password2!');
+
+        $violations = $validator->validate($user);
+
+        $this->assertCount(1, $violations);
+        $this->assertSame((new Email())->message, $violations[0]->getMessage());
     }
 }

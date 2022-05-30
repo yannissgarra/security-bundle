@@ -23,26 +23,23 @@ use Webmunkeez\SecurityBundle\Token\Extractor\TokenExtractorInterface;
  */
 final class TokenExtractorTest extends TestCase
 {
-    private TokenExtractor $extractor;
-    private Request $request;
-
     /**
      * @var TokenExtractorInterface&MockObject
      */
     private TokenExtractorInterface $randomTokenExtractor;
 
+    private TokenExtractor $extractor;
+
     protected function setUp(): void
     {
+        /** @var TokenExtractorInterface&MockObject $randomTokenExtractor */
+        $randomTokenExtractor = $this->getMockBuilder(TokenExtractorInterface::class)->disableOriginalConstructor()->getMock();
+        $this->randomTokenExtractor = $randomTokenExtractor;
+
         $this->extractor = new TokenExtractor();
-
-        $this->request = new Request();
-
-        $this->randomTokenExtractor = $this->getMockBuilder(TokenExtractorInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
-    public function testAddTokenExtractor()
+    public function testAddTokenExtractorShouldSucceed()
     {
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
 
@@ -51,43 +48,41 @@ final class TokenExtractorTest extends TestCase
         $this->assertCount(1, $reflection->getProperty('tokenExtractors')->getValue($this->extractor));
     }
 
-    public function testSupportsSuccess()
+    public function testSupportsShouldSucceed()
     {
         $this->randomTokenExtractor->method('supports')->willReturn(true);
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
 
-        $this->assertTrue($this->extractor->supports($this->request));
+        $this->assertTrue($this->extractor->supports(new Request()));
     }
 
-    public function testSupportsFail()
+    public function testSupportsShouldFail()
     {
         $this->randomTokenExtractor->method('supports')->willReturn(false);
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
 
-        $this->assertFalse($this->extractor->supports($this->request));
+        $this->assertFalse($this->extractor->supports(new Request()));
     }
 
-    public function testExtractSuccess()
+    public function testExtractShouldSucceed()
     {
         $this->randomTokenExtractor->method('supports')->willReturn(true);
         $this->randomTokenExtractor->method('extract')->willReturn('token');
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
-        $this->extractor->supports($this->request);
 
-        $token = $this->extractor->extract($this->request);
+        $token = $this->extractor->extract(new Request());
 
         $this->assertEquals('token', $token);
     }
 
-    public function testExtractFail()
+    public function testExtractShouldFail()
     {
         $this->expectException(TokenExtractionException::class);
 
         $this->randomTokenExtractor->method('supports')->willReturn(false);
         $this->randomTokenExtractor->method('extract')->willReturn('');
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
-        $this->extractor->supports($this->request);
 
-        $this->extractor->extract($this->request);
+        $this->extractor->extract(new Request());
     }
 }

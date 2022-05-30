@@ -47,20 +47,20 @@ final class TokenAuthenticatorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->tokenEncoder = $this->getMockBuilder(TokenEncoderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        /** @var TokenEncoderInterface&MockObject $tokenEncoder */
+        $tokenEncoder = $this->getMockBuilder(TokenEncoderInterface::class)->disableOriginalConstructor()->getMock();
+        $this->tokenEncoder = $tokenEncoder;
 
-        $this->tokenExtractor = $this->getMockBuilder(TokenExtractorInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        /** @var TokenExtractorInterface&MockObject $tokenExtractor */
+        $tokenExtractor = $this->getMockBuilder(TokenExtractorInterface::class)->disableOriginalConstructor()->getMock();
+        $this->tokenExtractor = $tokenExtractor;
 
-        $this->userProvider = $this->getMockBuilder(UserProviderInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        /** @var UserProviderInterface&MockObject $userProvider */
+        $userProvider = $this->getMockBuilder(UserProviderInterface::class)->disableOriginalConstructor()->getMock();
+        $this->userProvider = $userProvider;
     }
 
-    public function testSupportsSuccess(): void
+    public function testSupportsShouldSucceed(): void
     {
         $this->tokenExtractor->method('supports')->willReturn(true);
 
@@ -69,7 +69,7 @@ final class TokenAuthenticatorTest extends TestCase
         $this->assertTrue($tokenAuthenticator->supports(new Request()));
     }
 
-    public function testNoSupportsSuccess(): void
+    public function testSupportsShouldFail(): void
     {
         $this->tokenExtractor->method('supports')->willReturn(false);
 
@@ -78,7 +78,7 @@ final class TokenAuthenticatorTest extends TestCase
         $this->assertFalse($tokenAuthenticator->supports(new Request()));
     }
 
-    public function testAuthenticateSuccess(): void
+    public function testAuthenticateShouldSucceed(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
         $this->tokenEncoder->method('decode')->willReturn(Uuid::fromString(UserRepository::DATA['user-1']['id']));
@@ -98,10 +98,10 @@ final class TokenAuthenticatorTest extends TestCase
         }
 
         $this->assertNotNull($userBadge);
-        $this->assertEquals(UserRepository::DATA['user-1']['id'], $userBadge->getUserIdentifier());
+        $this->assertSame(UserRepository::DATA['user-1']['id'], $userBadge->getUserIdentifier());
     }
 
-    public function testAuthenticateFail(): void
+    public function testAuthenticateShouldFail(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
         $this->tokenEncoder->method('decode')->willThrowException(new TokenDecodingException());
