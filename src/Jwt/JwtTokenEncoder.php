@@ -21,7 +21,7 @@ use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class JWTTokenEncoder implements TokenEncoderInterface
+final class JwtTokenEncoder implements TokenEncoderInterface
 {
     private string $jwtPublicKeyPath;
     private string $jwtSecretKeyPath;
