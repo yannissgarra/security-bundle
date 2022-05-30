@@ -33,7 +33,9 @@ final class AuthorizationHeaderTokenExtractor implements TokenExtractorInterface
     public function extract(Request $request): string
     {
         if (true === $this->supports($request)) {
-            return substr($request->headers->get('Authorization'), 7);
+            $token = substr($request->headers->get('Authorization'), 7);
+
+            return false !== $token ? $token : '';
         }
 
         throw new TokenExtractionException();
