@@ -11,31 +11,39 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Http\Cookie;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Cookie;
+use Webmunkeez\SecurityBundle\Exception\CookieProvidingException;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProvider;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class CookieProviderTest extends KernelTestCase
+final class CookieProviderTest extends TestCase
 {
-    public function testSuccess()
+    public function testCreateShouldSucceed()
     {
-        static::bootKernel();
-
-        $cookieProvider = new CookieProvider(static::$kernel->getContainer()->getParameter('webmunkeez_security.cookie.name'), static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.token_ttl'));
+        $cookieProvider = new CookieProvider('SESSION', '1 year');
         $cookie = $cookieProvider->create('token');
 
         $this->assertInstanceOf(Cookie::class, $cookie);
-        $this->assertEquals(static::$kernel->getContainer()->getParameter('webmunkeez_security.cookie.name'), $cookie->getName());
-        $this->assertEquals('token', $cookie->getValue());
-        $this->assertEquals((new \DateTime())->modify('+'.static::$kernel->getContainer()->getParameter('webmunkeez_security.jwt.token_ttl'))->getTimestamp(), $cookie->getExpiresTime());
-        $this->assertEquals('/', $cookie->getPath());
+        $this->assertSame('SESSION', $cookie->getName());
+        $this->assertSame('token', $cookie->getValue());
+        $this->assertSame((new \DateTime())->modify('+1 year')->getTimestamp(), $cookie->getExpiresTime());
+        $this->assertSame('/', $cookie->getPath());
         $this->assertNull($cookie->getDomain());
         $this->assertTrue($cookie->isSecure());
         $this->assertTrue($cookie->isHttpOnly());
         $this->assertFalse($cookie->isRaw());
-        $this->assertEquals(Cookie::SAMESITE_LAX, $cookie->getSameSite());
+        $this->assertSame(Cookie::SAMESITE_LAX, $cookie->getSameSite());
+    }
+
+    public function testCreateWithWrongFormatTTLShouldFail()
+    {
+        $cookieProvider = new CookieProvider('SESSION', 'ttl');
+
+        $this->expectException(CookieProvidingException::class);
+
+        $cookieProvider->create('token');
     }
 }

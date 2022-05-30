@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Http\Cookie;
 
 use Symfony\Component\HttpFoundation\Cookie;
+use Webmunkeez\SecurityBundle\Exception\CookieProvidingException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -29,16 +30,20 @@ final class CookieProvider implements CookieProviderInterface
 
     public function create(string $token): Cookie
     {
-        return new Cookie(
-            $this->cookieName, // name
-            $token, // value
-            (new \DateTime())->modify('+'.$this->jwtTokenTTL)->getTimestamp(), // expire
-            '/', // path
-            null, // domain
-            true, // secure
-            true, // httpOnly
-            false, // raw
-            Cookie::SAMESITE_LAX, // sameSite
-        );
+        try {
+            return new Cookie(
+                $this->cookieName, // name
+                $token, // value
+                (new \DateTime())->modify('+'.$this->jwtTokenTTL)->getTimestamp(), // expire
+                '/', // path
+                null, // domain
+                true, // secure
+                true, // httpOnly
+                false, // raw
+                Cookie::SAMESITE_LAX, // sameSite
+            );
+        } catch (\Throwable $e) {
+            throw new CookieProvidingException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }

@@ -12,11 +12,15 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Http\Cookie;
 
 use Symfony\Component\HttpFoundation\Cookie;
+use Webmunkeez\SecurityBundle\Exception\CookieProvidingException;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
 interface CookieProviderInterface
 {
+    /**
+     * @throws CookieProvidingException
+     */
     public function create(string $token): Cookie;
 }
