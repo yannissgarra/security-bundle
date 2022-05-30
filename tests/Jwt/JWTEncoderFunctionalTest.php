@@ -28,8 +28,8 @@ final class JWTEncoderFunctionalTest extends KernelTestCase
     protected function setUp(): void
     {
         $this->tokenEncoder = new JWTEncoder(
-            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.public_key_path'),
+            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
@@ -47,8 +47,8 @@ final class JWTEncoderFunctionalTest extends KernelTestCase
     public function testEncodeWithWrongPrivateKeyPathShouldFail()
     {
         $tokenEncoder = new JWTEncoder(
-            'secret_key_path',
             static::getContainer()->getParameter('webmunkeez_security.jwt.public_key_path'),
+            'secret_key_path',
             static::getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
@@ -61,8 +61,8 @@ final class JWTEncoderFunctionalTest extends KernelTestCase
     public function testEncodeWithWrongPassPhraseShouldFail()
     {
         $tokenEncoder = new JWTEncoder(
-            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.public_key_path'),
+            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             'pass_phrase',
             static::getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
@@ -77,8 +77,8 @@ final class JWTEncoderFunctionalTest extends KernelTestCase
         $token = $this->tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
         $tokenEncoder = new JWTEncoder(
-            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             'public_key_path',
+            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );
@@ -93,8 +93,8 @@ final class JWTEncoderFunctionalTest extends KernelTestCase
         $token = $this->tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
         $tokenEncoder = new JWTEncoder(
-            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('jwt.wrong_public_key_path'),
+            static::getContainer()->getParameter('webmunkeez_security.jwt.secret_key_path'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.pass_phrase'),
             static::getContainer()->getParameter('webmunkeez_security.jwt.token_ttl')
         );

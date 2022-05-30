@@ -18,8 +18,8 @@ return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(JWTEncoder::class)
             ->args([
-                param('webmunkeez_security.jwt.secret_key_path'),
                 param('webmunkeez_security.jwt.public_key_path'),
+                param('webmunkeez_security.jwt.secret_key_path'),
                 param('webmunkeez_security.jwt.pass_phrase'),
                 param('webmunkeez_security.jwt.token_ttl'),
             ])

@@ -34,6 +34,6 @@ webmunkeez_security:
     user_provider:
         id: Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository
     jwt:
-        secret_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.key'
         public_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.pem'
+        secret_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.key'
         pass_phrase: 'Webmunkeez Security Bundle JWT Pass Phrase'

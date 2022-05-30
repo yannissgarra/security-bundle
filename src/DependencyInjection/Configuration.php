@@ -34,24 +34,6 @@ final class Configuration implements ConfigurationInterface
                         ->end() // id
                     ->end()
                 ->end() // user_provider
-                ->arrayNode('jwt')
-                    ->addDefaultsIfNotSet()
-                    ->isRequired()
-                    ->children()
-                        ->scalarNode('secret_key_path')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                        ->end() // secret_key
-                        ->scalarNode('public_key_path')
-                            ->isRequired()
-                            ->cannotBeEmpty()
-                        ->end() // public_key
-                        ->scalarNode('pass_phrase')->end()
-                        ->scalarNode('token_ttl')
-                            ->defaultValue('1 year')
-                        ->end() // token_ttl
-                    ->end()
-                ->end() // jwt
                 ->arrayNode('cookie')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -61,6 +43,24 @@ final class Configuration implements ConfigurationInterface
                         ->end() // name
                     ->end()
                 ->end() // cookie
+                ->arrayNode('jwt')
+                    ->addDefaultsIfNotSet()
+                    ->isRequired()
+                    ->children()
+                        ->scalarNode('public_key_path')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end() // public_key
+                        ->scalarNode('secret_key_path')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end() // secret_key
+                        ->scalarNode('pass_phrase')->end()
+                        ->scalarNode('token_ttl')
+                            ->defaultValue('1 year')
+                        ->end() // token_ttl
+                    ->end()
+                ->end() // jwt
             ->end();
 
         return $treeBuilder;

@@ -39,11 +39,11 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
         $tokenAuthenticatorDefinition = $container->getDefinition(TokenAuthenticator::class);
         $tokenAuthenticatorDefinition->replaceArgument(2, new Reference($config['user_provider']['id']));
 
-        $container->setParameter('webmunkeez_security.jwt.secret_key_path', $config['jwt']['secret_key_path']);
+        $container->setParameter('webmunkeez_security.cookie.name', $config['cookie']['name']);
         $container->setParameter('webmunkeez_security.jwt.public_key_path', $config['jwt']['public_key_path']);
+        $container->setParameter('webmunkeez_security.jwt.secret_key_path', $config['jwt']['secret_key_path']);
         $container->setParameter('webmunkeez_security.jwt.pass_phrase', $config['jwt']['pass_phrase']);
         $container->setParameter('webmunkeez_security.jwt.token_ttl', $config['jwt']['token_ttl']);
-        $container->setParameter('webmunkeez_security.cookie.name', $config['cookie']['name']);
     }
 
     public function prepend(ContainerBuilder $container)

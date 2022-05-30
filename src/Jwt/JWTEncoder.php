@@ -23,15 +23,15 @@ use Webmunkeez\SecurityBundle\Token\Encoder\TokenEncoderInterface;
  */
 final class JWTEncoder implements TokenEncoderInterface
 {
-    private string $jwtSecretKeyPath;
     private string $jwtPublicKeyPath;
+    private string $jwtSecretKeyPath;
     private string $jwtPassPhrase;
     private string $jwtTokenTTL;
 
-    public function __construct(string $jwtSecretKeyPath, string $jwtPublicKeyPath, string $jwtPassPhrase, string $jwtTokenTTL)
+    public function __construct(string $jwtPublicKeyPath, string $jwtSecretKeyPath, string $jwtPassPhrase, string $jwtTokenTTL)
     {
-        $this->jwtSecretKeyPath = $jwtSecretKeyPath;
         $this->jwtPublicKeyPath = $jwtPublicKeyPath;
+        $this->jwtSecretKeyPath = $jwtSecretKeyPath;
         $this->jwtPassPhrase = $jwtPassPhrase;
         $this->jwtTokenTTL = $jwtTokenTTL;
     }
