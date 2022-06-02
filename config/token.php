@@ -17,5 +17,6 @@ use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(TokenExtractor::class)
+
         ->alias(TokenExtractorInterface::class, TokenExtractor::class);
 };

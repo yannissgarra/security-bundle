@@ -23,5 +23,6 @@ return static function (ContainerConfigurator $container) {
                 param('webmunkeez_security.jwt.pass_phrase'),
                 param('webmunkeez_security.jwt.token_ttl'),
             ])
+
         ->alias(TokenEncoderInterface::class, JwtTokenEncoder::class);
 };

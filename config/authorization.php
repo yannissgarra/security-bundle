@@ -18,6 +18,8 @@ return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(AuthorizationChecker::class)
             ->args([service('security.authorization_checker')])
+
         ->set(AuthorizationCheckerInterface::class)
-            ->alias(AuthorizationCheckerInterface::class, AuthorizationChecker::class);
+
+        ->alias(AuthorizationCheckerInterface::class, AuthorizationChecker::class);
 };

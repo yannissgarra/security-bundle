@@ -23,9 +23,12 @@ return static function (ContainerConfigurator $container) {
                 param('webmunkeez_security.cookie.name'),
                 param('webmunkeez_security.jwt.token_ttl'),
             ])
+
         ->alias(CookieProviderInterface::class, CookieProvider::class)
+
         ->set(AuthorizationHeaderTokenExtractor::class)
             ->tag('webmunkeez_security.token_extractor', ['priority' => 20])
+
         ->set(CookieTokenExtractor::class)
             ->args([param('webmunkeez_security.cookie.name')])
             ->tag('webmunkeez_security.token_extractor', ['priority' => 10]);
