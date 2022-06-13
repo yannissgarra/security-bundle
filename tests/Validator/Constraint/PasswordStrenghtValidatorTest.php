@@ -14,9 +14,7 @@ namespace Webmunkeez\SecurityBundle\Test\Validator\Constraint;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
 use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
 use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenghtValidator;
 
@@ -79,28 +77,5 @@ final class PasswordStrenghtValidatorTest extends TestCase
         $validator->validate('Password', $constraint);
         $validator->validate('Password2', $constraint);
         $validator->validate('Password2!', $constraint);
-    }
-
-    public function testValidateAttributeShouldSucceed()
-    {
-        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
-
-        $user = new User('id', 'role', 'hello@yannissgarra.com', 'password2');
-
-        $violations = $validator->validate($user);
-
-        $this->assertCount(0, $violations);
-    }
-
-    public function testValidateAttributeWithLowPasswordStrenghtShouldFail()
-    {
-        $validator = Validation::createValidatorBuilder()->enableAnnotationMapping()->getValidator();
-
-        $user = new User('id', 'role', 'hello@yannissgarra.com', 'password');
-
-        $violations = $validator->validate($user);
-
-        $this->assertCount(1, $violations);
-        $this->assertSame((new PasswordStrenght())->message, $violations[0]->getMessage());
     }
 }

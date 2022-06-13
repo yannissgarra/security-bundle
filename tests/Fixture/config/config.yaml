@@ -26,6 +26,10 @@ services:
         resource: '../TestBundle/Controller/'
         tags: ['controller.service_arguments']
 
+    test_validator:
+        alias: validator
+        public: true
+
 sensio_framework_extra:
     router:
         annotations: false
