@@ -6,6 +6,18 @@ framework:
         utf8: true
         resource: '%kernel.project_dir%/config/routing.yaml'
 
+sensio_framework_extra:
+    router:
+        annotations: false
+
+webmunkeez_security:
+    user_provider:
+        id: Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository
+    jwt:
+        public_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.pem'
+        secret_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.key'
+        pass_phrase: 'Webmunkeez Security Bundle JWT Pass Phrase'
+
 parameters:
     jwt.wrong_public_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt_wrong.pem'
 
@@ -29,15 +41,3 @@ services:
     test_validator:
         alias: validator
         public: true
-
-sensio_framework_extra:
-    router:
-        annotations: false
-
-webmunkeez_security:
-    user_provider:
-        id: Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository
-    jwt:
-        public_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.pem'
-        secret_key_path: '%kernel.project_dir%/resources/jwt/certificates/jwt.key'
-        pass_phrase: 'Webmunkeez Security Bundle JWT Pass Phrase'
