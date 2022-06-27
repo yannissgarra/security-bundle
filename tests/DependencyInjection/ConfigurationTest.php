@@ -41,7 +41,12 @@ final class ConfigurationTest extends TestCase
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => self::CONFIG]);
 
-        $this->assertSame(self::CONFIG, $config);
+        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
+        $this->assertSame(self::CONFIG['cookie']['name'], $config['cookie']['name']);
+        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
+        $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
     }
 
     public function testProcessWithoutJwtTtlShouldSucceed()
@@ -49,13 +54,15 @@ final class ConfigurationTest extends TestCase
         $config = self::CONFIG;
         unset($config['jwt']['token_ttl']);
 
-        $configTest = self::CONFIG;
-        $configTest['jwt']['token_ttl'] = '1 year';
-
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertSame($configTest, $config);
+        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
+        $this->assertSame(self::CONFIG['cookie']['name'], $config['cookie']['name']);
+        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
+        $this->assertSame('1 year', $config['jwt']['token_ttl']);
     }
 
     public function testProcessWithoutCookieNameShouldSucceed()
@@ -63,13 +70,15 @@ final class ConfigurationTest extends TestCase
         $config = self::CONFIG;
         unset($config['cookie']['name']);
 
-        $configTest = self::CONFIG;
-        $configTest['cookie']['name'] = 'SESSION_TOKEN';
-
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertSame($configTest, $config);
+        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
+        $this->assertSame('SESSION_TOKEN', $config['cookie']['name']);
+        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
+        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
+        $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
     }
 
     public function testProcessWithoutConfigurationShoulFail()
