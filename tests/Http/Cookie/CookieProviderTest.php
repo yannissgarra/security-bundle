@@ -35,7 +35,7 @@ final class CookieProviderTest extends TestCase
         $this->assertTrue($cookie->isSecure());
         $this->assertTrue($cookie->isHttpOnly());
         $this->assertFalse($cookie->isRaw());
-        $this->assertSame(Cookie::SAMESITE_LAX, $cookie->getSameSite());
+        $this->assertSame(Cookie::SAMESITE_STRICT, $cookie->getSameSite());
     }
 
     public function testCreateWithWrongFormatTTLShouldFail()

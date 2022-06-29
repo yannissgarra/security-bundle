@@ -40,7 +40,7 @@ final class CookieProvider implements CookieProviderInterface
                 true, // secure
                 true, // httpOnly
                 false, // raw
-                Cookie::SAMESITE_LAX, // sameSite
+                Cookie::SAMESITE_STRICT, // sameSite
             );
         } catch (\Throwable $e) {
             throw new CookieProvidingException($e->getMessage(), $e->getCode(), $e);
