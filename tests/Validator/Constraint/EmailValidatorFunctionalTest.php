@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Webmunkeez\SecurityBundle\Test\Validator\Constraint;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
 use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
@@ -30,7 +31,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
 
     public function testValidateAttributeShouldSucceed()
     {
-        $user = new User('id', 'role', 'hello@yannissgarra.com', '@Password2!');
+        $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
 
         $violations = $this->validator->validate($user);
 
@@ -39,7 +40,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
 
     public function testValidateAttributeWithWrongEmailFormatShouldFail()
     {
-        $user = new User('id', 'role', 'email', '@Password2!');
+        $user = new User(Uuid::v4(), 'role', 'email', '@Password2!');
 
         $violations = $this->validator->validate($user);
 
@@ -49,7 +50,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
 
     public function testValidateAttributeWithNotExistingEmailMXShouldFail()
     {
-        $user = new User('id', 'role', 'contact@example.com', '@Password2!');
+        $user = new User(Uuid::v4(), 'role', 'contact@example.com', '@Password2!');
 
         $violations = $this->validator->validate($user);
 

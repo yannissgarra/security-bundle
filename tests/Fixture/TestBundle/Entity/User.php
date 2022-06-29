@@ -11,16 +11,18 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface as CoreUserInterface;
+use Symfony\Component\Uid\Uuid;
+use Webmunkeez\SecurityBundle\Model\UserInterface;
 use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
 use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class User implements UserInterface
+final class User implements CoreUserInterface, UserInterface
 {
-    private string $id;
+    private Uuid $id;
     private string $role;
 
     #[Email]
@@ -29,7 +31,7 @@ final class User implements UserInterface
     #[PasswordStrenght(strenght: 1)]
     private string $plainPassword;
 
-    public function __construct(string $id, string $role, string $email, string $plainPassword)
+    public function __construct(Uuid $id, string $role, string $email, string $plainPassword)
     {
         $this->id = $id;
         $this->role = $role;
@@ -37,9 +39,14 @@ final class User implements UserInterface
         $this->plainPassword = $plainPassword;
     }
 
-    public function getUserIdentifier(): string
+    public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->id->toRfc4122();
     }
 
     public function getRoles(): array

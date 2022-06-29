@@ -13,6 +13,7 @@ namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository;
 
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
 
@@ -34,7 +35,7 @@ final class UserRepository implements UserProviderInterface
             'email' => 'user2@example.com',
             'password' => '@Password2!',
         ],
-        ];
+    ];
 
     /**
      * @return array<string, User>
@@ -44,7 +45,7 @@ final class UserRepository implements UserProviderInterface
         $users = [];
 
         foreach (self::DATA as $data) {
-            $users[$data['id']] = new User($data['id'], $data['role'], $data['email'], $data['password']);
+            $users[$data['id']] = new User(Uuid::fromString($data['id']), $data['role'], $data['email'], $data['password']);
         }
 
         return $users;

@@ -15,6 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface as CoreAuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationChecker;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
@@ -46,7 +47,7 @@ final class AuthorizationCheckerTest extends TestCase
 
         $this->expectNotToPerformAssertions();
 
-        $user = new User('id', 'role', 'hello@yannissgarra.com', '@Password2!');
+        $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
 
         $this->authorizationChecker->denyAccessUnlessGranted('view', $user);
     }
@@ -55,7 +56,7 @@ final class AuthorizationCheckerTest extends TestCase
     {
         $this->coreAuthorizationChecker->method('isGranted')->willReturn(false);
 
-        $user = new User('id', 'role', 'hello@yannissgarra.com', '@Password2!');
+        $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
 
         try {
             $this->authorizationChecker->denyAccessUnlessGranted('delete', $user);
