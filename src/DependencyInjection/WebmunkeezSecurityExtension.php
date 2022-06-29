@@ -18,6 +18,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Webmunkeez\SecurityBundle\Action\UserAwareActionInterface;
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationChecker;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareInterface;
@@ -53,6 +54,9 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
 
         $container->registerForAutoconfiguration(AuthorizationCheckerAwareInterface::class)
             ->addMethodCall('setAuthorizationChecker', [new Reference(AuthorizationChecker::class)]);
+
+        $container->registerForAutoconfiguration(UserAwareActionInterface::class)
+            ->addMethodCall('setTokenStorage', [new Reference('security.token_storage')]);
     }
 
     public function prepend(ContainerBuilder $container)

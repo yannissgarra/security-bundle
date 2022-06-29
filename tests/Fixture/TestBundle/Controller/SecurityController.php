@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
+use Webmunkeez\SecurityBundle\Action\UserAwareActionInterface;
+use Webmunkeez\SecurityBundle\Action\UserAwareActionTrait;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareInterface;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareTrait;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProviderInterface;
@@ -24,9 +26,10 @@ use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class SecurityController implements AuthorizationCheckerAwareInterface
+final class SecurityController implements AuthorizationCheckerAwareInterface, UserAwareActionInterface
 {
     use AuthorizationCheckerAwareTrait;
+    use UserAwareActionTrait;
 
     public const LOGIN_ROUTE_URI = '/login';
     public const LOGOUT_ROUTE_URI = '/logout';
@@ -34,6 +37,7 @@ final class SecurityController implements AuthorizationCheckerAwareInterface
     public const PROTECTED_USER_ROUTE_URI = '/protected-user';
     public const PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user1-thanks-to-authorization-checker';
     public const UNPROTECTED_ROUTE_URI = '/unprotected';
+    public const USER_AWARE_ROUTE_URI = '/user-aware';
 
     private ParameterBagInterface $parameterBag;
     private CookieProviderInterface $cookieProvider;
@@ -93,5 +97,15 @@ final class SecurityController implements AuthorizationCheckerAwareInterface
     public function unprotected(): Response
     {
         return new Response('Unprotected route.');
+    }
+
+    #[Route(self::USER_AWARE_ROUTE_URI)]
+    public function userAware(): Response
+    {
+        if (null !== $this->getUser()) {
+            return new Response('There is a user.');
+        }
+
+        return new Response('There is no user.');
     }
 }

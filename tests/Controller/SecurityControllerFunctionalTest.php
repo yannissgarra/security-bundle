@@ -150,4 +150,21 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
         $client->request('GET', SecurityController::UNPROTECTED_ROUTE_URI);
     }
+
+    public function testUserAwareWithoutLoggedInUserShouldSucceed(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', SecurityController::USER_AWARE_ROUTE_URI);
+
+        $this->assertSame('There is no user.', $client->getResponse()->getContent());
+    }
+
+    public function testUserAwareWithLoggedInUserShouldSucceed(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
+        $client->request('GET', SecurityController::USER_AWARE_ROUTE_URI);
+
+        $this->assertSame('There is a user.', $client->getResponse()->getContent());
+    }
 }
