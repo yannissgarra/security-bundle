@@ -97,32 +97,50 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::PROTECTED_USER_ROUTE_URI);
     }
 
-    public function testProtectedUser1ThanksToAuthorizationCheckerWithAnonymousShouldFail(): void
+    public function testProtectedUser2ThanksToAuthorizationCheckerWithAnonymousShouldFail(): void
     {
         $this->expectException(AccessDeniedException::class);
 
         $client = static::createClient();
         $client->catchExceptions(false);
-        $client->request('GET', SecurityController::PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
+        $client->request('GET', SecurityController::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
     }
 
-    public function testProtectedUser1ThanksToAuthorizationCheckerWithUserShouldFail(): void
+    public function testProtectedUser2ThanksToAuthorizationCheckerWithAdminShouldFail(): void
     {
         $this->expectException(AccessDeniedException::class);
 
         $client = static::createClient();
         $client->catchExceptions(false);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
+        $client->request('GET', SecurityController::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
+    }
+
+    public function testProtectedUser2ThanksToAuthorizationCheckerWithUserShouldSucceed(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $client = static::createClient();
         $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-2']['id']);
-        $client->request('GET', SecurityController::PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
+        $client->request('GET', SecurityController::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
     }
 
-    public function testProtectedUSer1ThanksToAuthorizationCheckerWithAdminShouldSucceed(): void
+    public function testProtectedUser2OrAdminThanksToAuthorizationCheckerWithUserShouldSucceed(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $client = static::createClient();
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-2']['id']);
+        $client->request('GET', SecurityController::PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
+    }
+
+    public function testProtectedUser2OrAdminThanksToAuthorizationCheckerWithAdminShouldSucceed(): void
     {
         $this->expectNotToPerformAssertions();
 
         $client = static::createClient();
         $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
-        $client->request('GET', SecurityController::PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
+        $client->request('GET', SecurityController::PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
     }
 
     public function testUnprotectedWithAnonymousShouldSucceed(): void

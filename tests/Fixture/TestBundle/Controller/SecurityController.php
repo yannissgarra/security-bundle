@@ -35,7 +35,8 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
     public const LOGOUT_ROUTE_URI = '/logout';
     public const PROTECTED_ADMIN_ROUTE_URI = '/protected-admin';
     public const PROTECTED_USER_ROUTE_URI = '/protected-user';
-    public const PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user1-thanks-to-authorization-checker';
+    public const PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user2-thanks-to-authorization-checker';
+    public const PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user2-or-admin-thanks-to-authorization-checker';
     public const UNPROTECTED_ROUTE_URI = '/unprotected';
     public const USER_AWARE_ROUTE_URI = '/user-aware';
 
@@ -84,13 +85,22 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
         return new Response('Protected route, authorized for ROLE_USER.');
     }
 
-    #[Route(self::PROTECTED_USER1_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI)]
+    #[Route(self::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI)]
     #[IsGranted('ROLE_USER')]
     public function protectedUser1ThanksToAuthorizationChecker(): Response
     {
         $this->denyAccessUnlessGranted('view');
 
-        return new Response('Protected route, authorized for User 1.');
+        return new Response('Protected route, authorized for User 2.');
+    }
+
+    #[Route(self::PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI)]
+    #[IsGranted('ROLE_USER')]
+    public function protectedUser1OrAdminThanksToAuthorizationChecker(): Response
+    {
+        $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'view']);
+
+        return new Response('Protected route, authorized for User 2 or Admin.');
     }
 
     #[Route(self::UNPROTECTED_ROUTE_URI)]

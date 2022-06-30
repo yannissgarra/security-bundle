@@ -19,7 +19,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 interface AuthorizationCheckerInterface
 {
     /**
+     * @param string|array<string> $attribute
+     *
      * @throws AccessDeniedException
      */
-    public function denyAccessUnlessGranted(mixed $attribute, mixed $subject = null): void;
+    public function denyAccessUnlessGranted(string|array $attribute, mixed $subject = null): void;
 }

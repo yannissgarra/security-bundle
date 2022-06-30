@@ -26,9 +26,11 @@ trait AuthorizationCheckerAwareTrait
     }
 
     /**
+     * @param string|array<string> $attribute
+     *
      * @throws AccessDeniedException
      */
-    protected function denyAccessUnlessGranted(mixed $attribute, mixed $subject = null): void
+    protected function denyAccessUnlessGranted(string|array $attribute, mixed $subject = null): void
     {
         $this->authorizationChecker->denyAccessUnlessGranted($attribute, $subject);
     }

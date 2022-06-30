@@ -26,9 +26,21 @@ final class AuthorizationChecker implements AuthorizationCheckerInterface
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function denyAccessUnlessGranted(mixed $attribute, mixed $subject = null): void
+    public function denyAccessUnlessGranted(string|array $attribute, mixed $subject = null): void
     {
-        if (false === $this->authorizationChecker->isGranted($attribute, $subject)) {
+        $attributes = true === is_array($attribute) ? $attribute : [$attribute];
+
+        $isGranted = false;
+
+        foreach ($attributes as $attribute) {
+            if (true === $this->authorizationChecker->isGranted($attribute, $subject)) {
+                $isGranted = true;
+
+                break;
+            }
+        }
+
+        if (false === $isGranted) {
             $exception = new AccessDeniedException();
             $exception->setAttributes($attribute);
             $exception->setSubject($subject);

@@ -18,7 +18,7 @@ use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class AdminVoter extends Voter
+final class User2Voter extends Voter
 {
     public const VIEW = 'view';
 
@@ -35,7 +35,7 @@ final class AdminVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (UserRepository::DATA['user-1']['id'] === $user->getUserIdentifier()) {
+        if (UserRepository::DATA['user-2']['id'] === $user->getUserIdentifier()) {
             return true;
         }
 
