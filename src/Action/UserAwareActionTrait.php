@@ -26,7 +26,7 @@ trait UserAwareActionTrait
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function getUser(): ?UserInterface
+    protected function getUser(): ?UserInterface
     {
         $token = $this->tokenStorage->getToken();
 

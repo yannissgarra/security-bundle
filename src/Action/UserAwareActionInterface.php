@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Action;
 
-use Webmunkeez\SecurityBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
 interface UserAwareActionInterface
 {
-    public function getUser(): ?UserInterface;
+    public function setTokenStorage(TokenStorageInterface $tokenStorage): void;
 }
