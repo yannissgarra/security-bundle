@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Test\Authorization;
+namespace Webmunkeez\SecurityBundle\Test\Voter;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
