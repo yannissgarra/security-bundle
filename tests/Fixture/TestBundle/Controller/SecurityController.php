@@ -21,6 +21,7 @@ use Webmunkeez\SecurityBundle\Action\UserAwareActionTrait;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareInterface;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareTrait;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProviderInterface;
+use Webmunkeez\SecurityBundle\Model\UserInterface;
 use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 
 /**
@@ -112,7 +113,7 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
     #[Route(self::USER_AWARE_ROUTE_URI)]
     public function userAware(): Response
     {
-        if (null !== $this->getUser()) {
+        if (null !== $this->getUser() && $this->getUser() instanceof UserInterface) {
             return new Response('There is a user.');
         }
 
