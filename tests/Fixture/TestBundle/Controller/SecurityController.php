@@ -87,7 +87,7 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
 
     #[Route(self::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI)]
     #[IsGranted('ROLE_USER')]
-    public function protectedUser1ThanksToAuthorizationChecker(): Response
+    public function protectedUser2ThanksToAuthorizationChecker(): Response
     {
         $this->denyAccessUnlessGranted('view');
 
@@ -96,7 +96,7 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
 
     #[Route(self::PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI)]
     #[IsGranted('ROLE_USER')]
-    public function protectedUser1OrAdminThanksToAuthorizationChecker(): Response
+    public function protectedUser2OrAdminThanksToAuthorizationChecker(): Response
     {
         $this->denyAccessUnlessGranted(['ROLE_ADMIN', 'view']);
 
