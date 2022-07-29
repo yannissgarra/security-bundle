@@ -41,7 +41,7 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
 
         $userId = $this->tokenEncoder->decode($token);
 
-        $this->assertSame(UserRepository::DATA['user-1']['id'], $userId->toRfc4122());
+        $this->assertTrue($userId->equals(Uuid::fromString(UserRepository::DATA['user-1']['id'])));
     }
 
     public function testEncodeWithWrongPrivateKeyPathShouldFail()
