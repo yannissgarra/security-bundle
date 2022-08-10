@@ -62,7 +62,7 @@ final class AddTokenExtractorPassTest extends TestCase
         $methodCalls = $this->managerDefinition->getMethodCalls();
 
         $this->assertCount(2, $methodCalls);
-        $this->assertEquals(['addTokenExtractor', [new Reference('token_extractor_two')]], $methodCalls[0]);
-        $this->assertEquals(['addTokenExtractor', [new Reference('token_extractor_one')]], $methodCalls[1]);
+        $this->assertEqualsCanonicalizing(['addTokenExtractor', [new Reference('token_extractor_two')]], $methodCalls[0]);
+        $this->assertEqualsCanonicalizing(['addTokenExtractor', [new Reference('token_extractor_one')]], $methodCalls[1]);
     }
 }
