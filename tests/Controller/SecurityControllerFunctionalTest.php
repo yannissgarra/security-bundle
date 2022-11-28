@@ -42,7 +42,7 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $this->assertNull($sessionCookie);
     }
 
-    public function testProtectedAdminWithAnonymousShouldFail(): void
+    public function testProtectedAdminWithAnonymousShouldThrowException(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -51,7 +51,7 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::PROTECTED_ADMIN_ROUTE_URI);
     }
 
-    public function testProtectedAdminWithUserShouldFail(): void
+    public function testProtectedAdminWithUserShouldThrowException(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -70,7 +70,7 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::PROTECTED_ADMIN_ROUTE_URI);
     }
 
-    public function testProtectedUserWithAnonymousShouldFail(): void
+    public function testProtectedUserWithAnonymousShouldThrowException(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -97,7 +97,7 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::PROTECTED_USER_ROUTE_URI);
     }
 
-    public function testProtectedUser2ThanksToAuthorizationCheckerWithAnonymousShouldFail(): void
+    public function testProtectedUser2ThanksToAuthorizationCheckerWithAnonymousShouldThrowException(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -106,7 +106,7 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI);
     }
 
-    public function testProtectedUser2ThanksToAuthorizationCheckerWithAdminShouldFail(): void
+    public function testProtectedUser2ThanksToAuthorizationCheckerWithAdminShouldThrowException(): void
     {
         $this->expectException(AccessDeniedException::class);
 

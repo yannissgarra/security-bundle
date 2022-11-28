@@ -52,7 +52,7 @@ final class CookieTokenExtractorTest extends TestCase
         $this->assertSame('token', $token);
     }
 
-    public function testExtractWithoutCookieShouldFail(): void
+    public function testExtractWithoutCookieShouldThrowException(): void
     {
         $this->expectException(TokenExtractionException::class);
 

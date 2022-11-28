@@ -52,7 +52,7 @@ final class AuthorizationHeaderTokenExtractorTest extends TestCase
         $this->assertSame('token', $token);
     }
 
-    public function testExtractWithoutAuthorizationBearerShouldFail(): void
+    public function testExtractWithoutAuthorizationBearerShouldThrowException(): void
     {
         $this->expectException(TokenExtractionException::class);
 

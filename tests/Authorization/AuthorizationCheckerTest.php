@@ -41,7 +41,7 @@ final class AuthorizationCheckerTest extends TestCase
         $this->authorizationChecker = new AuthorizationChecker($this->coreAuthorizationChecker);
     }
 
-    public function testDenyAccessUnlessGrantedWithUserShouldSucceed(): void
+    public function testDenyAccessUnlessGrantedShouldSucceed(): void
     {
         $this->coreAuthorizationChecker->method('isGranted')->willReturn(true);
 
@@ -52,7 +52,7 @@ final class AuthorizationCheckerTest extends TestCase
         $this->authorizationChecker->denyAccessUnlessGranted('view', $user);
     }
 
-    public function testValidateWithoutTitleShouldFail(): void
+    public function testDenyAccessUnlessGrantedShouldThrowException(): void
     {
         $this->coreAuthorizationChecker->method('isGranted')->willReturn(false);
 

@@ -44,7 +44,7 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
         $this->assertTrue($userId->equals(Uuid::fromString(UserRepository::DATA['user-1']['id'])));
     }
 
-    public function testEncodeWithWrongPrivateKeyPathShouldFail(): void
+    public function testEncodeWithWrongPrivateKeyPathShouldThrowException(): void
     {
         $tokenEncoder = new JwtTokenEncoder(
             static::getContainer()->getParameter('webmunkeez_security.jwt.public_key_path'),
@@ -58,7 +58,7 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
         $tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
     }
 
-    public function testEncodeWithWrongPassPhraseShouldFail(): void
+    public function testEncodeWithWrongPassPhraseShouldThrowException(): void
     {
         $tokenEncoder = new JwtTokenEncoder(
             static::getContainer()->getParameter('webmunkeez_security.jwt.public_key_path'),
@@ -72,7 +72,7 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
         $tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
     }
 
-    public function testDecodeWithWrongPublicKeyPathShouldFail(): void
+    public function testDecodeWithWrongPublicKeyPathShouldThrowException(): void
     {
         $token = $this->tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
@@ -88,7 +88,7 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
         $tokenEncoder->decode($token);
     }
 
-    public function testDecodeWithWrongPublicKeyShouldFail(): void
+    public function testDecodeWithWrongPublicKeyShouldThrowException(): void
     {
         $token = $this->tokenEncoder->encode(Uuid::fromString(UserRepository::DATA['user-1']['id']));
 
@@ -104,21 +104,21 @@ final class JwtTokenEncoderFunctionalTest extends KernelTestCase
         $tokenEncoder->decode($token);
     }
 
-    public function testDecodeWithWrongFormatTokenShouldFail(): void
+    public function testDecodeWithWrongFormatTokenShouldThrowException(): void
     {
         $this->expectException(TokenDecodingException::class);
 
         $this->tokenEncoder->decode('token');
     }
 
-    public function testDecodeWithWrongFormatUserIdShouldFail(): void
+    public function testDecodeWithWrongFormatUserIdShouldThrowException(): void
     {
         $this->expectException(TokenDecodingException::class);
 
         $this->tokenEncoder->decode('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX2lkIjoiaWQifQ.PJ1jRFfmR7bJ0pt2dVDsjdCD6g8350vYzzR3Hm-02_e1BUA-ZY6PLnPqOgGgO9_TP1fxrvz7r5rsZbu_ytcDb9poKA1Gfju10QIgc8qoHXIQacHCV1Zga3Wp6S3cPIALTE3mM9hMNs78aAwb-HVYZQD8jZvZVjiPh1i7izRVZoOWyBAqiipeuivXMNTQR0PlcjilY-1-TGs17lOtJ8XFjluI4ULdo6tXQ8VUkabyRjUbmsStfc0Hh15wSkuYSeBvoow4mRnFRX2NwDjuUVvpuzd3qSytl5qgaDeIlBvKHA_GB1cH-Gp_BNJgfqd1l4PaUdeeqOIUn-desuBYGYVbhssJuy7WHfw1KZ0kaFbVZ3Mcw-VvpF78abuCCyq2tjrNOz-Kmrqg946W9Bv8pQSzjPP18UWWtmNqINIk250VnqekPsbyGweVZxqmsqebIkRYDDrb_GIEVEduGChBdiXd_Z2n2enWVVYL-7D_agGNZUfHDXpZcvDHm2ln27ravtsCaXQf5xshQvWKKldNwTmWK8yin-UaaoXqAZK1mAiIp0FCUa63QO6ONt4rEW6VVIRhPtTKchMsq0zl77SEeOk6vI_EFg8mmfC9nfpW7m76jcxWSSTYZyE0eDHCvhK3UvQG-zKnlczh72bmugIox-vwMb2eK2ht3XCdFm2VGEeZfEk');
     }
 
-    public function testDecodeWithWrongSignatureShouldFail(): void
+    public function testDecodeWithWrongSignatureShouldThrowException(): void
     {
         $this->expectException(TokenDecodingException::class);
 

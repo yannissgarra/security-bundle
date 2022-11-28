@@ -101,7 +101,7 @@ final class TokenAuthenticatorTest extends TestCase
         $this->assertSame(UserRepository::DATA['user-1']['id'], $userBadge->getUserIdentifier());
     }
 
-    public function testAuthenticateShouldFail(): void
+    public function testAuthenticateShouldThrowException(): void
     {
         $this->tokenExtractor->method('extract')->willReturn('token');
         $this->tokenEncoder->method('decode')->willThrowException(new TokenDecodingException());

@@ -38,7 +38,7 @@ final class CookieProviderTest extends TestCase
         $this->assertSame(Cookie::SAMESITE_STRICT, $cookie->getSameSite());
     }
 
-    public function testCreateWithWrongFormatTTLShouldFail(): void
+    public function testCreateWithWrongFormatTTLShouldThrowException(): void
     {
         $cookieProvider = new CookieProvider('SESSION', 'ttl');
 

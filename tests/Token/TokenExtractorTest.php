@@ -75,7 +75,7 @@ final class TokenExtractorTest extends TestCase
         $this->assertSame('token', $token);
     }
 
-    public function testExtractShouldFail(): void
+    public function testExtractShouldThrowException(): void
     {
         $this->expectException(TokenExtractionException::class);
 
