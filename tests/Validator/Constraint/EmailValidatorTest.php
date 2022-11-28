@@ -44,7 +44,7 @@ final class EmailValidatorTest extends TestCase
         $this->executionContext = $executionContext;
     }
 
-    public function testValidateShouldSucceed()
+    public function testValidateShouldSucceed(): void
     {
         $validator = new EmailValidator();
 
@@ -53,7 +53,7 @@ final class EmailValidatorTest extends TestCase
         $validator->validate('hello@yannissgarra.com', new Email());
     }
 
-    public function testValidateWithWrongEmailFormatShouldFail()
+    public function testValidateWithWrongEmailFormatShouldFail(): void
     {
         $validator = new EmailValidator();
         $constraint = new Email();
@@ -67,7 +67,7 @@ final class EmailValidatorTest extends TestCase
         $validator->validate('email', $constraint);
     }
 
-    public function testValidateWithNotExistingEmailMXShouldFail()
+    public function testValidateWithNotExistingEmailMXShouldFail(): void
     {
         $validator = new EmailValidator();
         $constraint = new Email();

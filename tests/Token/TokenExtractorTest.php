@@ -39,7 +39,7 @@ final class TokenExtractorTest extends TestCase
         $this->extractor = new TokenExtractor();
     }
 
-    public function testAddTokenExtractorShouldSucceed()
+    public function testAddTokenExtractorShouldSucceed(): void
     {
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
 
@@ -48,7 +48,7 @@ final class TokenExtractorTest extends TestCase
         $this->assertCount(1, $reflection->getProperty('tokenExtractors')->getValue($this->extractor));
     }
 
-    public function testSupportsShouldSucceed()
+    public function testSupportsShouldSucceed(): void
     {
         $this->randomTokenExtractor->method('supports')->willReturn(true);
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
@@ -56,7 +56,7 @@ final class TokenExtractorTest extends TestCase
         $this->assertTrue($this->extractor->supports(new Request()));
     }
 
-    public function testSupportsShouldFail()
+    public function testSupportsShouldFail(): void
     {
         $this->randomTokenExtractor->method('supports')->willReturn(false);
         $this->extractor->addTokenExtractor($this->randomTokenExtractor);
@@ -64,7 +64,7 @@ final class TokenExtractorTest extends TestCase
         $this->assertFalse($this->extractor->supports(new Request()));
     }
 
-    public function testExtractShouldSucceed()
+    public function testExtractShouldSucceed(): void
     {
         $this->randomTokenExtractor->method('supports')->willReturn(true);
         $this->randomTokenExtractor->method('extract')->willReturn('token');
@@ -75,7 +75,7 @@ final class TokenExtractorTest extends TestCase
         $this->assertSame('token', $token);
     }
 
-    public function testExtractShouldFail()
+    public function testExtractShouldFail(): void
     {
         $this->expectException(TokenExtractionException::class);
 

@@ -36,7 +36,7 @@ final class ConfigurationTest extends TestCase
         ],
     ];
 
-    public function testProcessWithFullConfigurationShouldSucceed()
+    public function testProcessWithFullConfigurationShouldSucceed(): void
     {
         $processor = new Processor();
         $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => self::CONFIG]);
@@ -49,7 +49,7 @@ final class ConfigurationTest extends TestCase
         $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
     }
 
-    public function testProcessWithoutJwtTtlShouldSucceed()
+    public function testProcessWithoutJwtTtlShouldSucceed(): void
     {
         $config = self::CONFIG;
         unset($config['jwt']['token_ttl']);
@@ -65,7 +65,7 @@ final class ConfigurationTest extends TestCase
         $this->assertSame('1 year', $config['jwt']['token_ttl']);
     }
 
-    public function testProcessWithoutCookieNameShouldSucceed()
+    public function testProcessWithoutCookieNameShouldSucceed(): void
     {
         $config = self::CONFIG;
         unset($config['cookie']['name']);
@@ -81,7 +81,7 @@ final class ConfigurationTest extends TestCase
         $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
     }
 
-    public function testProcessWithoutConfigurationShoulFail()
+    public function testProcessWithoutConfigurationShoulFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -89,7 +89,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), []);
     }
 
-    public function testProcessWithoutProviderShouldFail()
+    public function testProcessWithoutProviderShouldFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -100,7 +100,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testProcessWithoutProviderIdShouldFail()
+    public function testProcessWithoutProviderIdShouldFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -111,7 +111,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testProcessWithoutJwtShouldFail()
+    public function testProcessWithoutJwtShouldFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -122,7 +122,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testProcessWithoutJwtPublicKeyShouldFail()
+    public function testProcessWithoutJwtPublicKeyShouldFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -133,7 +133,7 @@ final class ConfigurationTest extends TestCase
         $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
-    public function testProcessWithoutJwtSecretKeyShouldFail()
+    public function testProcessWithoutJwtSecretKeyShouldFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 

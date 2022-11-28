@@ -44,7 +44,7 @@ final class PasswordStrenghtValidatorTest extends TestCase
         $this->executionContext = $executionContext;
     }
 
-    public function testValidateShouldSucceed()
+    public function testValidateShouldSucceed(): void
     {
         $validator = new PasswordStrenghtValidator();
 
@@ -53,7 +53,7 @@ final class PasswordStrenghtValidatorTest extends TestCase
         $validator->validate('@Password2!', new PasswordStrenght());
     }
 
-    public function testValidateWithLowPassorwStrenghtRequiredShouldSucceed()
+    public function testValidateWithLowPassorwStrenghtRequiredShouldSucceed(): void
     {
         $validator = new PasswordStrenghtValidator();
 
@@ -62,7 +62,7 @@ final class PasswordStrenghtValidatorTest extends TestCase
         $validator->validate('password', new PasswordStrenght(0));
     }
 
-    public function testValidateWithLowPasswordStrenghtShouldFail()
+    public function testValidateWithLowPasswordStrenghtShouldFail(): void
     {
         $validator = new PasswordStrenghtValidator();
         $constraint = new PasswordStrenght();

@@ -29,7 +29,7 @@ final class PasswordStrenghtValidatorFunctionalTest extends KernelTestCase
         $this->validator = static::getContainer()->get('test_validator');
     }
 
-    public function testValidateAttributeShouldSucceed()
+    public function testValidateAttributeShouldSucceed(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', 'password2');
 
@@ -38,7 +38,7 @@ final class PasswordStrenghtValidatorFunctionalTest extends KernelTestCase
         $this->assertCount(0, $violations);
     }
 
-    public function testValidateAttributeWithLowPasswordStrenghtShouldFail()
+    public function testValidateAttributeWithLowPasswordStrenghtShouldFail(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', 'password');
 

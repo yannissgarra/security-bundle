@@ -29,7 +29,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
         $this->validator = static::getContainer()->get('test_validator');
     }
 
-    public function testValidateAttributeShouldSucceed()
+    public function testValidateAttributeShouldSucceed(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
 
@@ -38,7 +38,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
         $this->assertCount(0, $violations);
     }
 
-    public function testValidateAttributeWithWrongEmailFormatShouldFail()
+    public function testValidateAttributeWithWrongEmailFormatShouldFail(): void
     {
         $user = new User(Uuid::v4(), 'role', 'email', '@Password2!');
 
@@ -48,7 +48,7 @@ final class EmailValidatorFunctionalTest extends KernelTestCase
         $this->assertSame((new Email())->message, $violations[0]->getMessage());
     }
 
-    public function testValidateAttributeWithNotExistingEmailMXShouldFail()
+    public function testValidateAttributeWithNotExistingEmailMXShouldFail(): void
     {
         $user = new User(Uuid::v4(), 'role', 'contact@example.com', '@Password2!');
 

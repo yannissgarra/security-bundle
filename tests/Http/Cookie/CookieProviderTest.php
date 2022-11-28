@@ -21,7 +21,7 @@ use Webmunkeez\SecurityBundle\Http\Cookie\CookieProvider;
  */
 final class CookieProviderTest extends TestCase
 {
-    public function testCreateShouldSucceed()
+    public function testCreateShouldSucceed(): void
     {
         $cookieProvider = new CookieProvider('SESSION', '1 year');
         $cookie = $cookieProvider->create('token');
@@ -38,7 +38,7 @@ final class CookieProviderTest extends TestCase
         $this->assertSame(Cookie::SAMESITE_STRICT, $cookie->getSameSite());
     }
 
-    public function testCreateWithWrongFormatTTLShouldFail()
+    public function testCreateWithWrongFormatTTLShouldFail(): void
     {
         $cookieProvider = new CookieProvider('SESSION', 'ttl');
 

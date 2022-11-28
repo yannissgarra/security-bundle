@@ -35,24 +35,24 @@ final class CookieTokenExtractorTest extends TestCase
         $this->invalidRequest = new Request();
     }
 
-    public function testSupportsWithCookieShouldSucceed()
+    public function testSupportsWithCookieShouldSucceed(): void
     {
         $this->assertTrue($this->extractor->supports($this->validRequest));
     }
 
-    public function testSupportsWithoutCookieShouldFail()
+    public function testSupportsWithoutCookieShouldFail(): void
     {
         $this->assertFalse($this->extractor->supports($this->invalidRequest));
     }
 
-    public function testExtractWithCookieShouldSucceed()
+    public function testExtractWithCookieShouldSucceed(): void
     {
         $token = $this->extractor->extract($this->validRequest);
 
         $this->assertSame('token', $token);
     }
 
-    public function testExtractWithoutCookieShouldFail()
+    public function testExtractWithoutCookieShouldFail(): void
     {
         $this->expectException(TokenExtractionException::class);
 
