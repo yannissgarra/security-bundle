@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Action\UserAwareActionInterface;
 use Webmunkeez\SecurityBundle\Action\UserAwareActionTrait;

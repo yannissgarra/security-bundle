@@ -64,7 +64,6 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
     {
         // define default config for security
         $container->prependExtensionConfig('security', [
-            'enable_authenticator_manager' => true,
             'password_hashers' => $this->definePasswordHashers($container->getParameter('kernel.environment')),
             'firewalls' => [
                 'dev' => [

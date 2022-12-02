@@ -6,10 +6,6 @@ framework:
         utf8: true
         resource: '%kernel.project_dir%/config/routing.yaml'
 
-sensio_framework_extra:
-    router:
-        annotations: false
-
 webmunkeez_security:
     user_provider:
         id: Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Repository\UserRepository

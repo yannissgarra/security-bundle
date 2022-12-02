@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Fixture;
 
-use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -28,7 +27,6 @@ final class TestKernel extends Kernel
     {
         return [
             new FrameworkBundle(),
-            new SensioFrameworkExtraBundle(),
             new SecurityBundle(),
             new WebmunkeezSecurityBundle(),
             new TestBundle(),
