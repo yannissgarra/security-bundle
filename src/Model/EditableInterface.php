@@ -14,7 +14,14 @@ namespace Webmunkeez\SecurityBundle\Model;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-interface UserAwareInterface extends EditableInterface
+interface EditableInterface
 {
-    public function getUser(): UserInterface;
+    public const CREATE = 'CREATE';
+    public const READ = 'READ';
+    public const UPDATE = 'UPDATE';
+    public const DELETE = 'DELETE';
+
+    public function isEditable(): bool;
+
+    public function setEditable(bool $editable): static;
 }

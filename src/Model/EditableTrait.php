@@ -14,7 +14,19 @@ namespace Webmunkeez\SecurityBundle\Model;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-interface UserAwareInterface extends EditableInterface
+trait EditableTrait
 {
-    public function getUser(): UserInterface;
+    private $editable = false;
+
+    public function isEditable(): bool
+    {
+        return $this->editable;
+    }
+
+    public function setEditable(bool $editable): static
+    {
+        $this->editable = $editable;
+
+        return $this;
+    }
 }

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity;
 
+use Webmunkeez\SecurityBundle\Model\EditableTrait;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;
 use Webmunkeez\SecurityBundle\Model\UserInterface;
 
@@ -19,6 +20,8 @@ use Webmunkeez\SecurityBundle\Model\UserInterface;
  */
 final class UserAware implements UserAwareInterface
 {
+    use EditableTrait;
+
     private User $user;
 
     public function __construct(User $user)
