@@ -21,7 +21,7 @@ interface EditableInterface
     public const UPDATE = 'UPDATE';
     public const DELETE = 'DELETE';
 
-    public function isEditable(): bool;
+    public function isEditable(): ?bool;
 
-    public function setEditable(bool $editable): static;
+    public function setEditable(?bool $editable): static;
 }

@@ -16,14 +16,14 @@ namespace Webmunkeez\SecurityBundle\Model;
  */
 trait EditableTrait
 {
-    private $editable = false;
+    private ?bool $editable = null;
 
-    public function isEditable(): bool
+    public function isEditable(): ?bool
     {
         return $this->editable;
     }
 
-    public function setEditable(bool $editable): static
+    public function setEditable(?bool $editable): static
     {
         $this->editable = $editable;
 

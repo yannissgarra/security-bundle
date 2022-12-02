@@ -39,7 +39,9 @@ final class EditableNormalizer implements NormalizerInterface, NormalizerAwareIn
         // avoid circular reference
         $context[spl_object_id($object).'.'.self::class.'.already_called'] = true;
 
-        $object->setEditable($this->authorizationChecker->isGranted(EditableInterface::UPDATE, $object));
+        if (null === $object->isEditable()) {
+            $object->setEditable($this->authorizationChecker->isGranted(EditableInterface::UPDATE, $object));
+        }
 
         return $this->normalizer->normalize($object, $format, $context);
     }
