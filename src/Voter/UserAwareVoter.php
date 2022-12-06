@@ -48,7 +48,7 @@ final class UserAwareVoter extends Voter
             return false;
         }
 
-        return $user->getId() === $subject->getUser()->getId();
+        return $subject->getUser()->getId()->equals($user->getId());
 
         throw new \LogicException('This code should not be reached!');
     }
