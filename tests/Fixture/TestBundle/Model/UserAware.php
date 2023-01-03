@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity;
+namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model;
 
 use Webmunkeez\SecurityBundle\Model\EditableTrait;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;

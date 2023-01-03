@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

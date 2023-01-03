@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationChecker;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

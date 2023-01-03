@@ -14,7 +14,7 @@ namespace Webmunkeez\SecurityBundle\Test\Validator\Constraint;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
 use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
 
 /**

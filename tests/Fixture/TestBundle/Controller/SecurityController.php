@@ -23,8 +23,8 @@ use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareTrait;
 use Webmunkeez\SecurityBundle\Http\Cookie\CookieProviderInterface;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;
 use Webmunkeez\SecurityBundle\Model\UserInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\UserAware;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\UserAware;
 use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 
 /**

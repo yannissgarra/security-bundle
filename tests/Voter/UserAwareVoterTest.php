@@ -16,8 +16,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\UserAware;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\UserAware;
 use Webmunkeez\SecurityBundle\Voter\UserAwareVoter;
 
 /**

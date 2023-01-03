@@ -17,8 +17,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Serializer\Normalizer\EditableNormalizer;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\UserAware;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\UserAware;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>

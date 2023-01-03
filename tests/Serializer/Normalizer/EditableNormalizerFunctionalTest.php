@@ -17,8 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\User;
-use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Entity\UserAware;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
+use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\UserAware;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
