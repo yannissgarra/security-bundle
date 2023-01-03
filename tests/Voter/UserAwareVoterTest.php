@@ -88,7 +88,7 @@ final class UserAwareVoterTest extends TestCase
         $this->assertTrue($vote);
     }
 
-    public function testVoteOnAttributeWithNotUserInterfaceShouldFail(): void
+    public function testVoteOnAttributeWithNoTokenUserShouldFail(): void
     {
         $this->token->method('getUser')->willReturn(null);
 
@@ -99,7 +99,7 @@ final class UserAwareVoterTest extends TestCase
         $this->assertFalse($vote);
     }
 
-    public function testVoteOnAttributeWithDifferentUserShouldFail(): void
+    public function testVoteOnAttributeWithDifferentTokenUserShouldFail(): void
     {
         $this->token->method('getUser')->willReturn(new User(Uuid::v4(), 'role', 'email', 'password'));
 
