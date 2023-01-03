@@ -16,5 +16,5 @@ namespace Webmunkeez\SecurityBundle\Model;
  */
 interface UserAwareInterface extends EditableInterface
 {
-    public function getUser(): UserInterface;
+    public function getUser(): ?UserInterface;
 }

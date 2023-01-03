@@ -48,6 +48,11 @@ final class UserAwareVoter extends Voter
             return false;
         }
 
+        if (null === $subject->getUser()) {
+            // if user aware has no user, allow access
+            return true;
+        }
+
         return $subject->getUser()->getId()->equals($user->getId());
 
         throw new \LogicException('This code should not be reached!');

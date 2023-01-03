@@ -22,14 +22,14 @@ final class UserAware implements UserAwareInterface
 {
     use EditableTrait;
 
-    private User $user;
+    private ?User $user;
 
-    public function __construct(User $user)
+    public function __construct(?User $user = null)
     {
         $this->user = $user;
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }

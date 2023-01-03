@@ -169,20 +169,48 @@ final class SecurityControllerFunctionalTest extends WebTestCase
         $client->request('GET', SecurityController::UNPROTECTED_ROUTE_URI);
     }
 
-    public function testUserAwareWithoutLoggedInUserShouldSucceed(): void
+    public function testUserReadWithoutLoggedInUserShouldSucceed(): void
     {
         $client = static::createClient();
-        $client->request('GET', SecurityController::USER_AWARE_ROUTE_URI);
+        $client->request('GET', SecurityController::USER_READ_ROUTE_URI);
 
         $this->assertSame('There is no user.', $client->getResponse()->getContent());
     }
 
-    public function testUserAwareWithLoggedInUserShouldSucceed(): void
+    public function testUserReadWithLoggedInUserShouldSucceed(): void
     {
         $client = static::createClient();
         $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
-        $client->request('GET', SecurityController::USER_AWARE_ROUTE_URI);
+        $client->request('GET', SecurityController::USER_READ_ROUTE_URI);
 
         $this->assertSame('There is a user.', $client->getResponse()->getContent());
+    }
+
+    public function testUserAwareShouldSucceed(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $client = static::createClient();
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
+        $client->request('GET', str_replace('{withUser}', 'right', SecurityController::USER_AWARE_ROUTE_URI));
+    }
+
+    public function testUserAwareWithNullUserShouldSucceed(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $client = static::createClient();
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
+        $client->request('GET', str_replace('{withUser}', 'null', SecurityController::USER_AWARE_ROUTE_URI));
+    }
+
+    public function testUserAwareWithWrongUserShouldThrowException(): void
+    {
+        $this->expectException(AccessDeniedException::class);
+
+        $client = static::createClient();
+        $client->catchExceptions(false);
+        $client->request('GET', SecurityController::LOGIN_ROUTE_URI.'/'.UserRepository::DATA['user-1']['id']);
+        $client->request('GET', str_replace('{withUser}', 'wrong', SecurityController::USER_AWARE_ROUTE_URI));
     }
 }
