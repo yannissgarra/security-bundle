@@ -13,7 +13,6 @@ namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model;
 
 use Webmunkeez\SecurityBundle\Model\EditableTrait;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;
-use Webmunkeez\SecurityBundle\Model\UserInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -29,7 +28,7 @@ final class UserAware implements UserAwareInterface
         $this->user = $user;
     }
 
-    public function getUser(): ?UserInterface
+    public function getUser(): ?User
     {
         return $this->user;
     }
