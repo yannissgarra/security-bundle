@@ -31,7 +31,9 @@ use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 final class TokenAuthenticator extends AbstractAuthenticator
 {
     private TokenEncoderInterface $tokenEncoder;
+
     private TokenExtractorInterface $tokenExtractor;
+
     private UserProviderInterface $userProvider;
 
     public function __construct(TokenEncoderInterface $tokenEncoder, TokenExtractorInterface $tokenExtractor, UserProviderInterface $userProvider)

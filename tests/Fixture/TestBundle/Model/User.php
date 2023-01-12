@@ -23,6 +23,7 @@ use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
 final class User implements CoreUserInterface, UserInterface
 {
     private Uuid $id;
+
     private string $role;
 
     #[Email]

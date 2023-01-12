@@ -20,6 +20,7 @@ use Webmunkeez\SecurityBundle\Exception\CookieProvidingException;
 final class CookieProvider implements CookieProviderInterface
 {
     private string $cookieName;
+
     private string $jwtTokenTTL;
 
     public function __construct(string $cookieName, string $jwtTokenTTL)

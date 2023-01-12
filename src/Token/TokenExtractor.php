@@ -23,6 +23,7 @@ final class TokenExtractor implements TokenExtractorInterface
      * @var array<TokenExtractorInterface>
      */
     private array $tokenExtractors = [];
+
     private TokenExtractorInterface $tokenExtractor;
 
     public function addTokenExtractor(TokenExtractorInterface $tokenExtractor)

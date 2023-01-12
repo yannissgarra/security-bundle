@@ -31,6 +31,7 @@ final class UserAwareVoterTest extends TestCase
     private TokenInterface $token;
 
     private \ReflectionMethod $supportsMethod;
+
     private \ReflectionMethod $voteOnAttribute;
 
     protected function setUp(): void

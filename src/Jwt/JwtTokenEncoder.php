@@ -24,8 +24,11 @@ use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
 final class JwtTokenEncoder implements TokenEncoderInterface
 {
     private string $jwtPublicKeyPath;
+
     private string $jwtSecretKeyPath;
+
     private string $jwtPassPhrase;
+
     private string $jwtTokenTTL;
 
     public function __construct(string $jwtPublicKeyPath, string $jwtSecretKeyPath, string $jwtPassPhrase, string $jwtTokenTTL)

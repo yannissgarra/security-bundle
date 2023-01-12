@@ -24,7 +24,9 @@ use Webmunkeez\SecurityBundle\Token\TokenExtractor;
 final class AddTokenExtractorPassTest extends TestCase
 {
     private AddTokenExtractorPass $pass;
+
     private ContainerBuilder $container;
+
     private Definition $managerDefinition;
 
     protected function setUp(): void

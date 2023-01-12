@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraint;
 final class PasswordStrenght extends Constraint
 {
     public string $message = 'This password is not complex enough.';
+
     public int $strenght;
 
     public function __construct(int $strenght = 3, mixed $options = null, array $groups = null, mixed $payload = null)

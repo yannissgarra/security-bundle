@@ -22,7 +22,9 @@ use Webmunkeez\SecurityBundle\Http\AuthorizationHeaderTokenExtractor;
 final class AuthorizationHeaderTokenExtractorTest extends TestCase
 {
     private AuthorizationHeaderTokenExtractor $extractor;
+
     private Request $validRequest;
+
     private Request $invalidRequest;
 
     protected function setUp(): void

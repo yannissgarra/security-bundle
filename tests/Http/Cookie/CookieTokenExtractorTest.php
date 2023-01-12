@@ -22,7 +22,9 @@ use Webmunkeez\SecurityBundle\Http\Cookie\CookieTokenExtractor;
 final class CookieTokenExtractorTest extends TestCase
 {
     private CookieTokenExtractor $extractor;
+
     private Request $validRequest;
+
     private Request $invalidRequest;
 
     protected function setUp(): void

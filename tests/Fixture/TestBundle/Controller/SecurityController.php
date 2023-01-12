@@ -36,17 +36,27 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
     use UserAwareActionTrait;
 
     public const LOGIN_ROUTE_URI = '/login';
+
     public const LOGOUT_ROUTE_URI = '/logout';
+
     public const PROTECTED_ADMIN_ROUTE_URI = '/protected-admin';
+
     public const PROTECTED_USER_ROUTE_URI = '/protected-user';
+
     public const PROTECTED_USER2_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user2-thanks-to-authorization-checker';
+
     public const PROTECTED_USER2_OR_ADMIN_THANKS_TO_AUTHORIZATION_CHECKER_ROUTE_URI = '/protected-user2-or-admin-thanks-to-authorization-checker';
+
     public const UNPROTECTED_ROUTE_URI = '/unprotected';
+
     public const USER_READ_ROUTE_URI = '/public/user-read';
+
     public const USER_AWARE_ROUTE_URI = '/public/user-aware/{withUser}';
 
     private ParameterBagInterface $parameterBag;
+
     private CookieProviderInterface $cookieProvider;
+
     private TokenEncoderInterface $tokenEncoder;
 
     public function __construct(ParameterBagInterface $parameterBag, CookieProviderInterface $cookieProvider, TokenEncoderInterface $tokenEncoder)
