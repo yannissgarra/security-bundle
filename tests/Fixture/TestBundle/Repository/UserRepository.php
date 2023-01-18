@@ -53,7 +53,7 @@ final class UserRepository implements UserProviderInterface
 
     public function load(string $identifier): UserInterface
     {
-        if (true === array_key_exists($identifier, self::users())) {
+        if (true === isset(self::users()[$identifier])) {
             return self::users()[$identifier];
         }
 

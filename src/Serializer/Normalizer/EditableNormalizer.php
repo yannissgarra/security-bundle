@@ -54,7 +54,7 @@ final class EditableNormalizer implements NormalizerInterface, NormalizerAwareIn
 
         // avoid circular reference
         if (
-            true === array_key_exists(spl_object_id($data).'.'.self::class.'.already_called', $context)
+            true === isset($context[spl_object_id($data).'.'.self::class.'.already_called'])
             && true === $context[spl_object_id($data).'.'.self::class.'.already_called']
         ) {
             return false;
