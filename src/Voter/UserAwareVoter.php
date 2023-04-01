@@ -41,16 +41,16 @@ final class UserAwareVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
+        if (null === $subject->getUser()) {
+            // if user aware has no user, allow access
+            return true;
+        }
+
         $user = $token->getUser();
 
         if (!$user instanceof UserInterface) {
             // the user must be logged in; if not, deny access
             return false;
-        }
-
-        if (null === $subject->getUser()) {
-            // if user aware has no user, allow access
-            return true;
         }
 
         return $subject->getUser()->getId()->equals($user->getId());

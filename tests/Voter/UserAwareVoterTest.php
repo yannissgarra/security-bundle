@@ -102,6 +102,17 @@ final class UserAwareVoterTest extends TestCase
         $this->assertTrue($vote);
     }
 
+    public function testVoteOnAttributeWithNullUserAndNoTokenUserShouldSucceed(): void
+    {
+        $this->token->method('getUser')->willReturn(null);
+
+        $userAware = new UserAware();
+
+        $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
+
+        $this->assertTrue($vote);
+    }
+
     public function testVoteOnAttributeWithNoTokenUserShouldFail(): void
     {
         $this->token->method('getUser')->willReturn(null);
