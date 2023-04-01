@@ -21,7 +21,7 @@ use Webmunkeez\SecurityBundle\DependencyInjection\Configuration;
  */
 final class ConfigurationTest extends TestCase
 {
-    public const CONFIG = [
+    public const DATA = [
         'user_provider' => [
             'id' => 'user_provider_id_value',
         ],
@@ -38,109 +38,89 @@ final class ConfigurationTest extends TestCase
 
     public function testProcessWithFullConfigurationShouldSucceed(): void
     {
-        $processor = new Processor();
-        $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => self::CONFIG]);
+        $processedConfig = (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => self::DATA]);
 
-        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
-        $this->assertSame(self::CONFIG['cookie']['name'], $config['cookie']['name']);
-        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
-        $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
+        $this->assertEqualsCanonicalizing(self::DATA, $processedConfig);
     }
 
     public function testProcessWithoutJwtTtlShouldSucceed(): void
     {
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['jwt']['token_ttl']);
 
-        $processor = new Processor();
-        $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        $processedConfig = (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
-        $this->assertSame(self::CONFIG['cookie']['name'], $config['cookie']['name']);
-        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
-        $this->assertSame('1 year', $config['jwt']['token_ttl']);
+        $config['jwt']['token_ttl'] = '1 year';
+
+        $this->assertEqualsCanonicalizing($config, $processedConfig);
     }
 
     public function testProcessWithoutCookieNameShouldSucceed(): void
     {
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['cookie']['name']);
 
-        $processor = new Processor();
-        $config = $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        $processedConfig = (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
 
-        $this->assertSame(self::CONFIG['user_provider']['id'], $config['user_provider']['id']);
-        $this->assertSame('SESSION_TOKEN', $config['cookie']['name']);
-        $this->assertSame(self::CONFIG['jwt']['public_key_path'], $config['jwt']['public_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['secret_key_path'], $config['jwt']['secret_key_path']);
-        $this->assertSame(self::CONFIG['jwt']['pass_phrase'], $config['jwt']['pass_phrase']);
-        $this->assertSame(self::CONFIG['jwt']['token_ttl'], $config['jwt']['token_ttl']);
+        $config['cookie']['name'] = 'SESSION_TOKEN';
+
+        $this->assertEqualsCanonicalizing($config, $processedConfig);
     }
 
     public function testProcessWithoutConfigurationShoulFail(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), []);
+        (new Processor())->processConfiguration(new Configuration(), []);
     }
 
     public function testProcessWithoutProviderShouldThrowException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['user_provider']);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
     public function testProcessWithoutProviderIdShouldThrowException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['user_provider']['id']);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
     public function testProcessWithoutJwtShouldThrowException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['jwt']);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
     public function testProcessWithoutJwtPublicKeyShouldThrowException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['jwt']['public_key_path']);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 
     public function testProcessWithoutJwtSecretKeyShouldThrowException(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $config = self::CONFIG;
+        $config = self::DATA;
         unset($config['jwt']['secret_key_path']);
 
-        $processor = new Processor();
-        $processor->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
+        (new Processor())->processConfiguration(new Configuration(), ['webmunkeez_security' => $config]);
     }
 }
