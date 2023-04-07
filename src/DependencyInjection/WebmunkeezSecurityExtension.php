@@ -20,8 +20,8 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Webmunkeez\SecurityBundle\Action\UserAwareActionInterface;
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
-use Webmunkeez\SecurityBundle\Authorization\AuthorizationChecker;
 use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerAwareInterface;
+use Webmunkeez\SecurityBundle\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -54,7 +54,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
         $container->setParameter('webmunkeez_security.jwt.token_ttl', $config['jwt']['token_ttl']);
 
         $container->registerForAutoconfiguration(AuthorizationCheckerAwareInterface::class)
-            ->addMethodCall('setAuthorizationChecker', [new Reference(AuthorizationChecker::class)]);
+            ->addMethodCall('setAuthorizationChecker', [new Reference(AuthorizationCheckerInterface::class)]);
 
         $container->registerForAutoconfiguration(UserAwareActionInterface::class)
             ->addMethodCall('setTokenStorage', [new Reference('security.token_storage')]);
