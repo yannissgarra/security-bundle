@@ -12,12 +12,12 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Webmunkeez\SecurityBundle\Authenticator\TokenAuthenticator;
-use Webmunkeez\SecurityBundle\Jwt\JwtTokenEncoder;
 use Webmunkeez\SecurityBundle\Provider\UserProviderInterface;
-use Webmunkeez\SecurityBundle\Token\TokenExtractor;
+use Webmunkeez\SecurityBundle\Token\TokenEncoderInterface;
+use Webmunkeez\SecurityBundle\Token\TokenExtractorInterface;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(TokenAuthenticator::class)
-            ->args([service(JwtTokenEncoder::class), service(TokenExtractor::class), service(UserProviderInterface::class)]);
+            ->args([service(TokenEncoderInterface::class), service(TokenExtractorInterface::class), service(UserProviderInterface::class)]);
 };
