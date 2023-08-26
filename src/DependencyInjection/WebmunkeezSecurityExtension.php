@@ -60,7 +60,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
             ->addMethodCall('setTokenStorage', [new Reference('security.token_storage')]);
     }
 
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         // define default config for security
         $container->prependExtensionConfig('security', [

@@ -62,4 +62,9 @@ final class EditableNormalizer implements NormalizerInterface, NormalizerAwareIn
 
         return true;
     }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [EditableInterface::class => false];
+    }
 }
