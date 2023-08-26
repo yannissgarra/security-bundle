@@ -23,7 +23,7 @@ final class PasswordStrenght extends Constraint
 
     public int $strenght;
 
-    public function __construct(int $strenght = 3, mixed $options = null, array $groups = null, mixed $payload = null)
+    public function __construct(int $strenght = 3, mixed $options = null, ?array $groups = null, mixed $payload = null)
     {
         parent::__construct($options, $groups, $payload);
 
