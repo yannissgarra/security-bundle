@@ -86,7 +86,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
 
     private function definePasswordHashers(string $environment): array
     {
-        if ('test' === $environment) {
+        if (true === in_array($environment, ['test'])) {
             // By default, password hashers are resource intensive and take time. This is
             // important to generate secure password hashes. In tests however, secure hashes
             // are not important, waste resources and increase test times. The following
