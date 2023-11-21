@@ -30,7 +30,7 @@ final class WebmunkeezSecurityExtension extends Extension implements PrependExte
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'));
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'), $container->getParameter('kernel.environment'));
         $loader->load('authenticator.php');
         $loader->load('authorization.php');
         $loader->load('event_listener.php');
