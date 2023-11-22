@@ -44,7 +44,7 @@ final class EditableExtensionTest extends TestCase
     {
         $this->authorizationChecker->method('isGranted')->willReturn(true);
 
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!')]);
 
         $editable = $this->extension->isEditable($userAware);
 

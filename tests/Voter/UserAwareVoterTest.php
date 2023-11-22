@@ -51,7 +51,7 @@ final class UserAwareVoterTest extends TestCase
 
     public function testSupportsShouldSucceed(): void
     {
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'email', 'password'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'email', 'password')]);
 
         $supports = $this->supportsMethod->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware]);
 
@@ -69,7 +69,7 @@ final class UserAwareVoterTest extends TestCase
 
     public function testSupportsWithWrongAttributeShouldFail(): void
     {
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'email', 'password'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'email', 'password')]);
 
         $supports = $this->supportsMethod->invokeArgs(new UserAwareVoter(), ['WrongAttribute', $userAware]);
 
@@ -82,7 +82,7 @@ final class UserAwareVoterTest extends TestCase
 
         $this->token->method('getUser')->willReturn($user);
 
-        $userAware = new UserAware($user);
+        $userAware = new UserAware([$user]);
 
         $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
 
@@ -96,6 +96,20 @@ final class UserAwareVoterTest extends TestCase
         $this->token->method('getUser')->willReturn($user);
 
         $userAware = new UserAware();
+
+        $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
+
+        $this->assertTrue($vote);
+    }
+
+    public function testVoteOnAttributeWithMultipleUsersShouldSucceed(): void
+    {
+        $user1 = new User(Uuid::v4(), 'role', 'email', 'password');
+        $user2 = new User(Uuid::v4(), 'role', 'email2', 'password');
+
+        $this->token->method('getUser')->willReturn($user1);
+
+        $userAware = new UserAware([$user1, $user2]);
 
         $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
 
@@ -117,7 +131,7 @@ final class UserAwareVoterTest extends TestCase
     {
         $this->token->method('getUser')->willReturn(null);
 
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'email', 'password'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'email', 'password')]);
 
         $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
 
@@ -128,7 +142,7 @@ final class UserAwareVoterTest extends TestCase
     {
         $this->token->method('getUser')->willReturn(new User(Uuid::v4(), 'role', 'email', 'password'));
 
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'email', 'password'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'email', 'password')]);
 
         $vote = $this->voteOnAttribute->invokeArgs(new UserAwareVoter(), [UserAwareInterface::READ, $userAware, $this->token]);
 

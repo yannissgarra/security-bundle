@@ -62,7 +62,7 @@ final class EditableNormalizerTest extends TestCase
         $this->coreNormalizer->method('normalize')->willReturn(self::DATA['user_aware']);
         $this->authorizationChecker->method('isGranted')->willReturn(true);
 
-        $userAware = new UserAware(new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!'));
+        $userAware = new UserAware([new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!')]);
 
         $data = $this->normalizer->normalize($userAware);
 

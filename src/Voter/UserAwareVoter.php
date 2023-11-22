@@ -41,7 +41,7 @@ final class UserAwareVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
-        if (null === $subject->getUser()) {
+        if (0 === count($subject->getUsers())) {
             // if user aware has no user, allow access
             return true;
         }
@@ -53,8 +53,12 @@ final class UserAwareVoter extends Voter
             return false;
         }
 
-        return $subject->getUser()->getId()->equals($user->getId());
+        foreach ($subject->getUsers() as $subjectUser) {
+            if (true === $subjectUser->getId()->equals($user->getId())) {
+                return true;
+            }
+        }
 
-        throw new \LogicException('This code should not be reached!');
+        return false;
     }
 }

@@ -13,6 +13,7 @@ namespace Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model;
 
 use Webmunkeez\SecurityBundle\Model\EditableTrait;
 use Webmunkeez\SecurityBundle\Model\UserAwareInterface;
+use Webmunkeez\SecurityBundle\Model\UserInterface;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -21,15 +22,21 @@ final class UserAware implements UserAwareInterface
 {
     use EditableTrait;
 
-    private ?User $user;
+    /**
+     * @var array<UserInterface>
+     */
+    private array $users;
 
-    public function __construct(?User $user = null)
+    /**
+     * @param array<UserInterface> $users
+     */
+    public function __construct(array $users = [])
     {
-        $this->user = $user;
+        $this->users = $users;
     }
 
-    public function getUser(): ?User
+    public function getUsers(): array
     {
-        return $this->user;
+        return $this->users;
     }
 }

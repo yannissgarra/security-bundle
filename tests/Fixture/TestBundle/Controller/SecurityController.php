@@ -141,11 +141,11 @@ final class SecurityController implements AuthorizationCheckerAwareInterface, Us
         $userAware = new UserAware();
 
         if ('right' === $withUser) {
-            $userAware = new UserAware($this->getUser());
+            $userAware = new UserAware([$this->getUser()]);
         }
 
         if ('wrong' === $withUser) {
-            $userAware = new UserAware(new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!'));
+            $userAware = new UserAware([new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!')]);
         }
 
         $this->denyAccessUnlessGranted(UserAwareInterface::READ, $userAware);

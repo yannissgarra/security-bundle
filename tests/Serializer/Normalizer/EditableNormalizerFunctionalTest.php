@@ -35,35 +35,35 @@ final class EditableNormalizerFunctionalTest extends KernelTestCase
     public function testNormalizeShouldSucceed(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
-        $userAware = new UserAware($user);
+        $userAware = new UserAware([$user]);
 
         static::getContainer()->get(TokenStorageInterface::class)->setToken(new TestBrowserToken($user->getRoles(), $user));
 
         $json = $this->serializer->serialize($userAware, JsonEncoder::FORMAT);
 
-        $this->assertSame('{"user":{"id":"'.$userAware->getUser()->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUser()->getId()->toRfc4122().'","roles":["role"]},"editable":true}', $json);
+        $this->assertSame('{"users":[{"id":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","roles":["role"]}],"editable":true}', $json);
     }
 
     public function testNormalizeWithoutLoggedInUserShouldSucceed(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
-        $userAware = new UserAware($user);
+        $userAware = new UserAware([$user]);
 
         $json = $this->serializer->serialize($userAware, JsonEncoder::FORMAT);
 
-        $this->assertSame('{"user":{"id":"'.$userAware->getUser()->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUser()->getId()->toRfc4122().'","roles":["role"]},"editable":false}', $json);
+        $this->assertSame('{"users":[{"id":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","roles":["role"]}],"editable":false}', $json);
     }
 
     public function testNormalizeWithWrongLoggedInUserShouldSucceed(): void
     {
         $user1 = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
         $user2 = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', '@Password2!');
-        $userAware = new UserAware($user2);
+        $userAware = new UserAware([$user2]);
 
         static::getContainer()->get(TokenStorageInterface::class)->setToken(new TestBrowserToken($user1->getRoles(), $user1));
 
         $json = $this->serializer->serialize($userAware, JsonEncoder::FORMAT);
 
-        $this->assertSame('{"user":{"id":"'.$userAware->getUser()->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUser()->getId()->toRfc4122().'","roles":["role"]},"editable":false}', $json);
+        $this->assertSame('{"users":[{"id":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","userIdentifier":"'.$userAware->getUsers()[0]->getId()->toRfc4122().'","roles":["role"]}],"editable":false}', $json);
     }
 }
