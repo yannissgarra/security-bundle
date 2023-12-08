@@ -15,13 +15,13 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
-use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
-use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenghtValidator;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrength;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrengthValidator;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class PasswordStrenghtValidatorTest extends TestCase
+final class PasswordStrengthValidatorTest extends TestCase
 {
     /**
      * @var ConstraintViolationBuilderInterface&MockObject
@@ -46,26 +46,26 @@ final class PasswordStrenghtValidatorTest extends TestCase
 
     public function testValidateShouldSucceed(): void
     {
-        $validator = new PasswordStrenghtValidator();
+        $validator = new PasswordStrengthValidator();
 
         $this->expectNotToPerformAssertions();
 
-        $validator->validate('@Password2!', new PasswordStrenght());
+        $validator->validate('@Password2!', new PasswordStrength());
     }
 
-    public function testValidateWithLowPassorwStrenghtRequiredShouldSucceed(): void
+    public function testValidateWithLowPassorwStrengthRequiredShouldSucceed(): void
     {
-        $validator = new PasswordStrenghtValidator();
+        $validator = new PasswordStrengthValidator();
 
         $this->expectNotToPerformAssertions();
 
-        $validator->validate('password', new PasswordStrenght(0));
+        $validator->validate('password', new PasswordStrength(0));
     }
 
-    public function testValidateWithLowPasswordStrenghtShouldFail(): void
+    public function testValidateWithLowPasswordStrengthShouldFail(): void
     {
-        $validator = new PasswordStrenghtValidator();
-        $constraint = new PasswordStrenght();
+        $validator = new PasswordStrengthValidator();
+        $constraint = new PasswordStrength();
 
         $this->constraintViolationBuilder->expects($this->exactly(4))->method('addViolation')->willReturn(null);
 

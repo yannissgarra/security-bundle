@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface as CoreUserInterface;
 use Symfony\Component\Uid\Uuid;
 use Webmunkeez\SecurityBundle\Model\UserInterface;
 use Webmunkeez\SecurityBundle\Validator\Constraint\Email;
-use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrength;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
@@ -29,7 +29,7 @@ final class User implements CoreUserInterface, UserInterface
     #[Email]
     private string $email;
 
-    #[PasswordStrenght(strenght: 1)]
+    #[PasswordStrength(strength: 1)]
     private string $plainPassword;
 
     public function __construct(Uuid $id, string $role, string $email, string $plainPassword)

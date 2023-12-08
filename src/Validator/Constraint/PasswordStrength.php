@@ -17,17 +17,17 @@ use Symfony\Component\Validator\Constraint;
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
-final class PasswordStrenght extends Constraint
+final class PasswordStrength extends Constraint
 {
     public string $message = 'This password is not complex enough.';
 
-    public int $strenght;
+    public int $strength;
 
-    public function __construct(int $strenght = 3, mixed $options = null, ?array $groups = null, mixed $payload = null)
+    public function __construct(int $strength = 3, mixed $options = null, ?array $groups = null, mixed $payload = null)
     {
         parent::__construct($options, $groups, $payload);
 
         // init values
-        $this->strenght = $strenght;
+        $this->strength = $strength;
     }
 }

@@ -15,12 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Webmunkeez\SecurityBundle\Test\Fixture\TestBundle\Model\User;
-use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenght;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrength;
 
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class PasswordStrenghtValidatorFunctionalTest extends KernelTestCase
+final class PasswordStrengthValidatorFunctionalTest extends KernelTestCase
 {
     private ValidatorInterface $validator;
 
@@ -38,13 +38,13 @@ final class PasswordStrenghtValidatorFunctionalTest extends KernelTestCase
         $this->assertCount(0, $violations);
     }
 
-    public function testValidateAttributeWithLowPasswordStrenghtShouldFail(): void
+    public function testValidateAttributeWithLowPasswordStrengthShouldFail(): void
     {
         $user = new User(Uuid::v4(), 'role', 'hello@yannissgarra.com', 'password');
 
         $violations = $this->validator->validate($user);
 
         $this->assertCount(1, $violations);
-        $this->assertSame((new PasswordStrenght())->message, $violations[0]->getMessage());
+        $this->assertSame((new PasswordStrength())->message, $violations[0]->getMessage());
     }
 }

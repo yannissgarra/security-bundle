@@ -12,13 +12,13 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Webmunkeez\SecurityBundle\Validator\Constraint\EmailValidator;
-use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrenghtValidator;
+use Webmunkeez\SecurityBundle\Validator\Constraint\PasswordStrengthValidator;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(EmailValidator::class)
             ->tag('validator.constraint_validator')
 
-        ->set(PasswordStrenghtValidator::class)
+        ->set(PasswordStrengthValidator::class)
             ->tag('validator.constraint_validator');
 };

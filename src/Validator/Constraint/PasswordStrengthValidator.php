@@ -20,12 +20,12 @@ use ZxcvbnPhp\Zxcvbn;
 /**
  * @author Yannis Sgarra <hello@yannissgarra.com>
  */
-final class PasswordStrenghtValidator extends ConstraintValidator
+final class PasswordStrengthValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint): void
     {
-        if (!$constraint instanceof PasswordStrenght) {
-            throw new UnexpectedTypeException($constraint, PasswordStrenght::class);
+        if (!$constraint instanceof PasswordStrength) {
+            throw new UnexpectedTypeException($constraint, PasswordStrength::class);
         }
 
         // custom constraints should ignore null and empty values to allow
@@ -44,7 +44,7 @@ final class PasswordStrenghtValidator extends ConstraintValidator
 
         $weak = $zxcvbn->passwordStrength($value);
 
-        if ($weak['score'] < $constraint->strenght) {
+        if ($weak['score'] < $constraint->strength) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation()
             ;
